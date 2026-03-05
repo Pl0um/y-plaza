@@ -1,0 +1,16 @@
+services:
+    app:
+        build:
+            context: .
+            dockerfile: dockerfile
+        container_name: yplaza
+        ports:
+            - "3030:3030"
+        networks:
+            - vnet
+        volumes:
+            - ./:/usr/src/yplaza
+            - /usr/src/app/node_modules
+networks:
+    vnet:
+        driver: bridge
