@@ -1,32 +1,26 @@
 {
-  "name": "y-plaza",
+  "name": "kreagency",
   "version": "1.0.0",
-  "description": "",
-  "main": "index.js",
+  "description": "Plateforme immobilière KreAgency — monorepo frontend + backend",
+  "private": true,
+  "workspaces": [
+    "frontend",
+    "backend"
+  ],
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "dev": "concurrently --names \"BACK,FRONT\" --prefix-colors \"cyan,magenta\" \"npm run dev:backend\" \"npm run dev:frontend\"",
+    "dev:frontend": "npm run dev --workspace=frontend",
+    "dev:backend": "npm run dev --workspace=backend",
+    "build": "npm run build --workspace=frontend && npm run build --workspace=backend",
+    "install:all": "npm install"
+  },
+  "devDependencies": {
+    "concurrently": "^9.2.1"
   },
   "repository": {
     "type": "git",
     "url": "git+https://github.com/Pl0um/y-plaza.git"
   },
-  "keywords": [],
-  "author": "",
-  "license": "ISC",
-  "type": "commonjs",
-  "bugs": {
-    "url": "https://github.com/Pl0um/y-plaza/issues"
-  },
-  "homepage": "https://github.com/Pl0um/y-plaza#readme",
-  "dependencies": {
-    "cors": "^2.8.6",
-    "ejs": "^4.0.1",
-    "express": "^5.2.1"
-  },
-  "devDependencies": {
-    "@types/express": "^5.0.6",
-    "@types/node": "^25.3.3",
-    "ts-node-dev": "^2.0.0",
-    "typescript": "^5.9.3"
-  }
+  "author": "KreAgency",
+  "license": "ISC"
 }

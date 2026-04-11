@@ -1,0 +1,140 @@
+.page {
+  padding: 2rem 0 4rem;
+}
+
+.back {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  font-size: 0.875rem;
+  color: var(--color-text-muted);
+  margin-bottom: 1.5rem;
+  transition: color var(--transition);
+}
+
+.back:hover { color: var(--color-primary); }
+
+.layout {
+  display: grid;
+  grid-template-columns: 1fr 360px;
+  gap: 2.5rem;
+  align-items: start;
+  margin-bottom: 3rem;
+}
+
+/* ─── Infos agence ──────────────────────────────────────────────── */
+.agenceHeader {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  flex-wrap: wrap;
+  margin-bottom: 1.25rem;
+}
+
+.agenceNom {
+  font-size: 1.65rem;
+  font-weight: 700;
+  color: var(--color-text);
+  letter-spacing: -0.02em;
+}
+
+.siegeBadge {
+  background-color: var(--color-primary);
+  color: #fff;
+  font-size: 0.72rem;
+  font-weight: 700;
+  padding: 0.2rem 0.6rem;
+  border-radius: 999px;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+}
+
+.infoGrid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 1rem;
+  margin-bottom: 1.5rem;
+}
+
+.infoItem {
+  background: var(--color-bg-light);
+  border-radius: var(--border-radius);
+  padding: 0.875rem 1rem;
+}
+
+.infoLabel {
+  font-size: 0.72rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  color: var(--color-text-muted);
+  margin-bottom: 0.3rem;
+}
+
+.infoValue {
+  font-size: 0.9rem;
+  font-weight: 500;
+  color: var(--color-text);
+}
+
+.infoValue a {
+  color: var(--color-primary);
+}
+
+/* ─── Carte ─────────────────────────────────────────────────────── */
+.mapTitle {
+  font-size: 0.875rem;
+  font-weight: 600;
+  color: var(--color-text-muted);
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  margin-bottom: 0.75rem;
+}
+
+/* ─── Section biens ─────────────────────────────────────────────── */
+.biensSection {
+  border-top: 1px solid var(--color-border);
+  padding-top: 2.5rem;
+}
+
+.biensTitle {
+  font-size: 1.25rem;
+  font-weight: 700;
+  color: var(--color-text);
+  margin-bottom: 1.5rem;
+}
+
+.biensTitle span { color: var(--color-primary); }
+
+.biensGrid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 1.5rem;
+}
+
+.empty {
+  padding: 2rem;
+  text-align: center;
+  color: var(--color-text-muted);
+  background: var(--color-bg-light);
+  border-radius: var(--border-radius);
+}
+
+.loading, .error {
+  text-align: center;
+  padding: 4rem;
+  color: var(--color-text-muted);
+}
+
+@media (max-width: 900px) {
+  .layout { grid-template-columns: 1fr; }
+  .infoGrid { grid-template-columns: 1fr; }
+}
+
+@media (max-width: 1024px) {
+  .biensGrid { grid-template-columns: repeat(2, 1fr); }
+}
+
+@media (max-width: 640px) {
+  .biensGrid { grid-template-columns: 1fr; }
+}

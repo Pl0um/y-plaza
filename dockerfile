@@ -1,6 +1,6 @@
 FROM node:20
 
-WORKDIR /usr/src/yplaza
+WORKDIR /usr/src/kreagency
 
 COPY package.json ./
 COPY package-lock.json ./

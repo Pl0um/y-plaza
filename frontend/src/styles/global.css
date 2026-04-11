@@ -1,0 +1,134 @@
+/* ─── Reset & base ─────────────────────────────────────────────── */
+*, *::before, *::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+/* ─── Variables KreAgency ───────────────────────────────────────── */
+:root {
+  --color-primary:      #00B0A0;
+  --color-primary-dark: #008F82;
+  --color-bg:           #FFFFFF;
+  --color-bg-light:     #F5F5F5;
+  --color-text:         #1A1A2E;
+  --color-text-muted:   #6B7280;
+  --color-border:       #E5E7EB;
+  --color-success:      #10B981;
+  --color-warning:      #F59E0B;
+  --color-danger:       #EF4444;
+
+  --font-family:   'Inter', system-ui, sans-serif;
+  --border-radius: 8px;
+  --shadow-sm:     0 1px 3px rgba(0, 0, 0, 0.08);
+  --shadow-md:     0 4px 12px rgba(0, 0, 0, 0.10);
+  --shadow-lg:     0 8px 24px rgba(0, 0, 0, 0.12);
+
+  --transition: 0.2s ease;
+}
+
+/* ─── Base ──────────────────────────────────────────────────────── */
+html {
+  font-size: 16px;
+  scroll-behavior: smooth;
+}
+
+body {
+  font-family: var(--font-family);
+  background-color: var(--color-bg);
+  color: var(--color-text);
+  line-height: 1.6;
+  -webkit-font-smoothing: antialiased;
+}
+
+a {
+  color: inherit;
+  text-decoration: none;
+}
+
+img {
+  max-width: 100%;
+  display: block;
+}
+
+button {
+  cursor: pointer;
+  font-family: inherit;
+}
+
+/* ─── Utilitaires rapides ───────────────────────────────────────── */
+.container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 1.5rem;
+}
+
+.btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.625rem 1.25rem;
+  border-radius: var(--border-radius);
+  font-size: 0.9rem;
+  font-weight: 500;
+  border: none;
+  transition: background-color var(--transition), transform var(--transition);
+}
+
+.btn:active {
+  transform: scale(0.98);
+}
+
+.btn-primary {
+  background-color: var(--color-primary);
+  color: #fff;
+}
+
+.btn-primary:hover {
+  background-color: var(--color-primary-dark);
+}
+
+.btn-outline {
+  background-color: transparent;
+  color: var(--color-primary);
+  border: 1.5px solid var(--color-primary);
+}
+
+.btn-outline:hover {
+  background-color: var(--color-primary);
+  color: #fff;
+}
+
+/* ─── Statuts des biens ─────────────────────────────────────────── */
+.badge {
+  display: inline-block;
+  padding: 0.2rem 0.6rem;
+  border-radius: 999px;
+  font-size: 0.75rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+}
+
+.badge-disponible {
+  background-color: #D1FAE5;
+  color: #065F46;
+}
+
+.badge-sous_compromis {
+  background-color: #FEF3C7;
+  color: #92400E;
+}
+
+.badge-vendu {
+  background-color: #FEE2E2;
+  color: #991B1B;
+}
+
+/* ─── Leaflet : forcer la hauteur dans les conteneurs flex ─────── */
+.leaflet-container {
+  width: 100%;
+  height: 100%;
+  border-radius: var(--border-radius);
+  z-index: 0;
+}

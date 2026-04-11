@@ -1,0 +1,101 @@
+.wrapper {
+  background: #fff;
+  border: 1px solid var(--color-border);
+  border-radius: var(--border-radius);
+  padding: 1.25rem 1.5rem;
+  box-shadow: var(--shadow-sm);
+}
+
+.form {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.875rem;
+  align-items: flex-end;
+}
+
+.field {
+  display: flex;
+  flex-direction: column;
+  gap: 0.3rem;
+  flex: 1 1 160px;
+}
+
+.label {
+  font-size: 0.78rem;
+  font-weight: 600;
+  color: var(--color-text-muted);
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+}
+
+.input,
+.select {
+  height: 40px;
+  padding: 0 0.75rem;
+  border: 1.5px solid var(--color-border);
+  border-radius: var(--border-radius);
+  font-size: 0.875rem;
+  font-family: inherit;
+  color: var(--color-text);
+  background: #fff;
+  transition: border-color var(--transition);
+  width: 100%;
+}
+
+.input:focus,
+.select:focus {
+  outline: none;
+  border-color: var(--color-primary);
+}
+
+.prixRow {
+  display: flex;
+  align-items: center;
+  gap: 0.4rem;
+}
+
+.prixRow .input {
+  flex: 1;
+}
+
+.sep {
+  font-size: 0.8rem;
+  color: var(--color-text-muted);
+  white-space: nowrap;
+  padding-top: 1.4rem;
+}
+
+.actions {
+  display: flex;
+  gap: 0.5rem;
+  flex: 0 0 auto;
+  align-self: flex-end;
+}
+
+.btnReset {
+  height: 40px;
+  padding: 0 1rem;
+  border-radius: var(--border-radius);
+  border: 1.5px solid var(--color-border);
+  background: transparent;
+  color: var(--color-text-muted);
+  font-size: 0.875rem;
+  font-family: inherit;
+  cursor: pointer;
+  transition: border-color var(--transition), color var(--transition);
+  white-space: nowrap;
+}
+
+.btnReset:hover {
+  border-color: var(--color-primary);
+  color: var(--color-primary);
+}
+
+@media (max-width: 640px) {
+  .form {
+    gap: 0.75rem;
+  }
+  .field {
+    flex: 1 1 100%;
+  }
+}

@@ -1,0 +1,13 @@
+.mapWrapper {
+  width: 100%;
+  border-radius: var(--border-radius);
+  overflow: hidden;
+  box-shadow: var(--shadow-sm);
+  border: 1px solid var(--color-border);
+}
+
+/* Le conteneur Leaflet doit avoir une hauteur explicite */
+.mapWrapper :global(.leaflet-container) {
+  width: 100%;
+  height: 100%;
+}

@@ -3,13 +3,13 @@ services:
         build:
             context: .
             dockerfile: dockerfile
-        container_name: yplaza
+        container_name: kreagency
         ports:
             - "3030:3030"
         networks:
             - vnet
         volumes:
-            - ./:/usr/src/yplaza
+            - ./:/usr/src/kreagency
             - /usr/src/app/node_modules
 networks:
     vnet:
