@@ -1,5 +1,14 @@
 // Interfaces TypeScript partagées — KreAgency frontend
 
+// ─── Rôles ────────────────────────────────────────────────────────────────────
+
+export type RoleUtilisateur =
+  | 'client'
+  | 'commercial'
+  | 'gestionnaire_ventes'
+  | 'directeur'
+  | 'admin';
+
 // ─── Agence ───────────────────────────────────────────────────────────────────
 
 export interface Agence {
@@ -46,8 +55,6 @@ export interface Bien {
 
 // ─── Utilisateur ──────────────────────────────────────────────────────────────
 
-export type RoleUtilisateur = 'admin' | 'directeur' | 'commercial' | 'client';
-
 export interface Utilisateur {
   id: string;
   prenom: string;
@@ -57,6 +64,62 @@ export interface Utilisateur {
   agence_id: string | null;
   telephone: string | null;
   actif?: boolean;
+}
+
+// ─── Authentification ─────────────────────────────────────────────────────────
+
+export interface LoginPayload {
+  email: string;
+  password: string;
+}
+
+export interface RegisterPayload {
+  email: string;
+  password: string;
+  nom: string;
+  prenom: string;
+}
+
+export interface AuthResponse {
+  token: string;
+  refresh_token: string;
+  user: Utilisateur;
+}
+
+export interface InvitePayload {
+  email: string;
+  role: RoleUtilisateur;
+  agence_id?: string;
+  nom: string;
+  prenom: string;
+}
+
+// ─── Transaction ──────────────────────────────────────────────────────────────
+
+export type StatutTransaction = 'en_cours' | 'finalisee' | 'annulee';
+
+export interface Transaction {
+  id: string;
+  bien_id: string;
+  acheteur_id: string;
+  prix_final: number;
+  type: TypeTransaction;
+  statut: StatutTransaction;
+  notes: string | null;
+  created_at: string;
+  // Champs joints (optionnels selon la requête)
+  biens?: Pick<Bien, 'id' | 'titre' | 'ville' | 'prix' | 'agence_id'>;
+  utilisateurs?: Pick<Utilisateur, 'id' | 'nom' | 'prenom' | 'email'>;
+}
+
+// ─── Favori ───────────────────────────────────────────────────────────────────
+
+export interface Favori {
+  id: string;
+  utilisateur_id: string;
+  bien_id: string;
+  created_at: string;
+  biens?: Bien;
 }
 
 // ─── Paramètres de filtrage des biens ─────────────────────────────────────────
@@ -81,4 +144,9 @@ export interface ApiListResponse<T> {
 export interface ApiDetailResponse<T> {
   success: boolean;
   data: T;
+}
+
+export interface ApiMessageResponse {
+  success: boolean;
+  message: string;
 }

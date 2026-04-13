@@ -1,5 +1,5 @@
 .card {
-  background: #fff;
+  background: var(--color-bg);
   border-radius: var(--border-radius);
   box-shadow: var(--shadow-sm);
   border: 1px solid var(--color-border);
@@ -59,6 +59,16 @@
 .transactionLocation {
   background-color: #F5F3FF;
   color: #6D28D9;
+}
+
+:global(html.dark) .transactionVente {
+  background-color: #1E3A5F;
+  color: #93C5FD;
+}
+
+:global(html.dark) .transactionLocation {
+  background-color: #2E1065;
+  color: #C4B5FD;
 }
 
 /* ─── Contenu ────────────────────────────────────────────────── */

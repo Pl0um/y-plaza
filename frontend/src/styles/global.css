@@ -27,6 +27,18 @@
   --transition: 0.2s ease;
 }
 
+/* ─── Mode nuit ─────────────────────────────────────────────────── */
+html.dark {
+  --color-bg:         #0F172A;
+  --color-bg-light:   #1E293B;
+  --color-text:       #E2E8F0;
+  --color-text-muted: #94A3B8;
+  --color-border:     #334155;
+  --shadow-sm:        0 1px 3px rgba(0, 0, 0, 0.35);
+  --shadow-md:        0 4px 12px rgba(0, 0, 0, 0.45);
+  --shadow-lg:        0 8px 24px rgba(0, 0, 0, 0.55);
+}
+
 /* ─── Base ──────────────────────────────────────────────────────── */
 html {
   font-size: 16px;
@@ -39,6 +51,7 @@ body {
   color: var(--color-text);
   line-height: 1.6;
   -webkit-font-smoothing: antialiased;
+  transition: background-color 0.25s ease, color 0.25s ease;
 }
 
 a {
@@ -123,6 +136,22 @@ button {
 .badge-vendu {
   background-color: #FEE2E2;
   color: #991B1B;
+}
+
+/* ─── Badges en mode nuit ───────────────────────────────────────── */
+html.dark .badge-disponible {
+  background-color: #064E3B;
+  color: #6EE7B7;
+}
+
+html.dark .badge-sous_compromis {
+  background-color: #78350F;
+  color: #FCD34D;
+}
+
+html.dark .badge-vendu {
+  background-color: #7F1D1D;
+  color: #FCA5A5;
 }
 
 /* ─── Leaflet : forcer la hauteur dans les conteneurs flex ─────── */

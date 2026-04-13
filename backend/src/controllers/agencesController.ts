@@ -37,6 +37,63 @@ export async function getAgenceById(req: Request, res: Response, next: NextFunct
   }
 }
 
+// POST /api/agences — créer une agence (admin)
+export async function createAgence(req: Request, res: Response): Promise<void> {
+  const { nom, adresse, ville, code_postal, telephone, email, latitude, longitude, est_siege } = req.body as {
+    nom: string; adresse: string; ville: string; code_postal: string;
+    telephone: string; email: string;
+    latitude?: number; longitude?: number; est_siege?: boolean;
+  };
+
+  if (!nom || !adresse || !ville || !code_postal || !telephone || !email) {
+    res.status(400).json({ success: false, message: 'Tous les champs obligatoires doivent être renseignés.' });
+    return;
+  }
+
+  const { data, error } = await supabase
+    .from('agences')
+    .insert({ nom, adresse, ville, code_postal, telephone, email, latitude: latitude ?? null, longitude: longitude ?? null, est_siege: est_siege ?? false })
+    .select()
+    .single();
+
+  if (error || !data) {
+    res.status(500).json({ success: false, message: error?.message ?? 'Erreur création agence.' });
+    return;
+  }
+
+  res.status(201).json({ success: true, data });
+}
+
+// PUT /api/agences/:id — modifier une agence (admin)
+export async function updateAgence(req: Request, res: Response): Promise<void> {
+  const { id } = req.params;
+  const champs = ['nom', 'adresse', 'ville', 'code_postal', 'telephone', 'email', 'latitude', 'longitude', 'est_siege'];
+  const updates: Record<string, unknown> = {};
+
+  for (const champ of champs) {
+    if (req.body[champ] !== undefined) updates[champ] = req.body[champ];
+  }
+
+  if (Object.keys(updates).length === 0) {
+    res.status(400).json({ success: false, message: 'Aucun champ à mettre à jour.' });
+    return;
+  }
+
+  const { data, error } = await supabase
+    .from('agences')
+    .update(updates)
+    .eq('id', id)
+    .select()
+    .single();
+
+  if (error || !data) {
+    res.status(404).json({ success: false, message: 'Agence introuvable.' });
+    return;
+  }
+
+  res.json({ success: true, data });
+}
+
 // GET /api/agences/:id/biens — biens rattachés à une agence (avec photos)
 export async function getBiensByAgence(req: Request, res: Response, next: NextFunction): Promise<void> {
   try {
