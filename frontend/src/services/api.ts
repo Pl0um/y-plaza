@@ -1,6 +1,7 @@
 // Service API — toutes les fonctions fetch vers le backend Express
 // Le proxy Vite redirige /api → http://localhost:3000
-// Le token JWT est lu depuis localStorage et injecté automatiquement.
+// Le JWT est stocké dans un cookie httpOnly géré par le backend (protégé contre XSS).
+// withCredentials: true est indispensable pour que le cookie soit envoyé avec chaque requête.
 
 import axios from 'axios';
 import type {
@@ -13,7 +14,6 @@ import type {
   ApiMessageResponse,
   LoginPayload,
   RegisterPayload,
-  AuthResponse,
   InvitePayload,
   Transaction,
   Favori,
@@ -22,29 +22,17 @@ import type {
 // ─── Instance axios ───────────────────────────────────────────────────────────
 
 const http = axios.create({
-  baseURL: '/api',
-  headers: { 'Content-Type': 'application/json' },
+  baseURL:         '/api',
+  headers:         { 'Content-Type': 'application/json' },
+  // Envoie automatiquement le cookie sb-token avec chaque requête cross-origin
+  withCredentials: true,
 });
 
-// Intercepteur de requête : ajoute le token JWT si présent
-http.interceptors.request.use((config) => {
-  const token = localStorage.getItem('krea_token');
-  if (token) {
-    config.headers.Authorization = `Bearer ${token}`;
-  }
-  return config;
-});
-
-// Intercepteur de réponse : si 401, efface le token (session expirée)
+// Intercepteur de réponse : si 401, le cookie est expiré — pas de nettoyage manuel nécessaire
+// (le cookie httpOnly est géré côté serveur via clearCookie sur /auth/logout)
 http.interceptors.response.use(
   (response) => response,
-  (error) => {
-    if (error.response?.status === 401) {
-      localStorage.removeItem('krea_token');
-      localStorage.removeItem('krea_user');
-    }
-    return Promise.reject(error);
-  }
+  (error) => Promise.reject(error)
 );
 
 // ─── Auth ─────────────────────────────────────────────────────────────────────
@@ -54,9 +42,10 @@ export async function apiRegister(payload: RegisterPayload): Promise<{ message: 
   return { message: data.message };
 }
 
-export async function apiLogin(payload: LoginPayload): Promise<AuthResponse> {
-  const { data } = await http.post<ApiDetailResponse<AuthResponse>>('/auth/login', payload);
-  return data.data;
+// Login : le backend pose le cookie httpOnly — on récupère uniquement le profil
+export async function apiLogin(payload: LoginPayload): Promise<Utilisateur> {
+  const { data } = await http.post<ApiDetailResponse<{ user: Utilisateur }>>('/auth/login', payload);
+  return data.data.user;
 }
 
 export async function apiLogout(): Promise<void> {

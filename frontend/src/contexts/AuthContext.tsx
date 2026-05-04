@@ -33,37 +33,24 @@ export function AuthProvider({ children }: { children: ReactNode }) {
   const [user, setUser]       = useState<Utilisateur | null>(null);
   const [loading, setLoading] = useState(true);
 
-  // Au montage : restaure la session depuis localStorage si un token existe
+  // Au montage : tente de récupérer le profil via le cookie httpOnly existant.
+  // Si le cookie est absent ou expiré, apiMe() échoue silencieusement → user = null.
   useEffect(() => {
-    const token = localStorage.getItem('krea_token');
-    if (!token) {
-      setLoading(false);
-      return;
-    }
-
-    // Vérifie que le token est encore valide en récupérant le profil
     apiMe()
       .then(profil => setUser(profil))
-      .catch(() => {
-        localStorage.removeItem('krea_token');
-        localStorage.removeItem('krea_user');
-      })
+      .catch(() => {}) // cookie absent ou expiré — état non connecté
       .finally(() => setLoading(false));
   }, []);
 
-  // Connexion : appelle le backend, stocke token + user
+  // Connexion : le backend pose le cookie httpOnly, on reçoit uniquement le profil
   const login = useCallback(async (payload: LoginPayload) => {
-    const authData = await apiLogin(payload);
-    localStorage.setItem('krea_token', authData.token);
-    localStorage.setItem('krea_user',  JSON.stringify(authData.user));
-    setUser(authData.user);
+    const profil = await apiLogin(payload);
+    setUser(profil);
   }, []);
 
-  // Déconnexion : efface le localStorage et réinitialise l'état
+  // Déconnexion : demande au backend d'effacer le cookie httpOnly côté serveur
   const logout = useCallback(async () => {
-    await apiLogout().catch(() => {}); // ne bloque pas si le backend échoue
-    localStorage.removeItem('krea_token');
-    localStorage.removeItem('krea_user');
+    await apiLogout().catch(() => {}); // ne bloque pas si le backend est inaccessible
     setUser(null);
   }, []);
 
@@ -71,7 +58,6 @@ export function AuthProvider({ children }: { children: ReactNode }) {
   const refreshUser = useCallback(async () => {
     const profil = await apiMe();
     setUser(profil);
-    localStorage.setItem('krea_user', JSON.stringify(profil));
   }, []);
 
   const value: AuthContextValue = {

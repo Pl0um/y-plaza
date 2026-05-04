@@ -56,10 +56,13 @@ export async function getAllBiens(req: Request, res: Response, next: NextFunctio
       query = query.eq('type_transaction', type_transaction);
     }
     if (prix_min && typeof prix_min === 'string') {
-      query = query.gte('prix', parseFloat(prix_min));
+      // parseFloat protégé contre les valeurs non numériques (NaN ignoré)
+      const min = parseFloat(prix_min);
+      if (!isNaN(min)) query = query.gte('prix', min);
     }
     if (prix_max && typeof prix_max === 'string') {
-      query = query.lte('prix', parseFloat(prix_max));
+      const max = parseFloat(prix_max);
+      if (!isNaN(max)) query = query.lte('prix', max);
     }
     if (statut && typeof statut === 'string') {
       query = query.eq('statut', statut);
@@ -98,7 +101,36 @@ export async function getBienById(req: Request, res: Response, next: NextFunctio
 // POST /api/biens — créer un bien (photos envoyées séparément dans req.body.photos)
 export async function createBien(req: Request, res: Response, next: NextFunction): Promise<void> {
   try {
-    const { photos, ...bienData } = req.body as { photos?: string[] } & Record<string, unknown>;
+    // Extraction explicite des champs autorisés — évite d'insérer des champs inattendus
+    // même si le body a déjà été validé par Zod en amont
+    const {
+      photos, titre, description, type_bien, type_transaction,
+      prix, surface, nb_pieces, nb_chambres,
+      adresse, ville, code_postal, latitude, longitude, statut, agence_id,
+    } = req.body as {
+      photos?:           string[];
+      titre:             string;
+      description?:      string;
+      type_bien:         string;
+      type_transaction:  string;
+      prix:              number;
+      surface?:          number;
+      nb_pieces?:        number;
+      nb_chambres?:      number;
+      adresse:           string;
+      ville:             string;
+      code_postal:       string;
+      latitude?:         number;
+      longitude?:        number;
+      statut?:           string;
+      agence_id?:        string;
+    };
+
+    const bienData = {
+      titre, description, type_bien, type_transaction,
+      prix, surface, nb_pieces, nb_chambres,
+      adresse, ville, code_postal, latitude, longitude, statut, agence_id,
+    };
 
     const { data: bien, error: bienError } = await supabase
       .from('biens')
@@ -133,7 +165,18 @@ export async function createBien(req: Request, res: Response, next: NextFunction
 // PUT /api/biens/:id — modifier un bien
 export async function updateBien(req: Request, res: Response, next: NextFunction): Promise<void> {
   try {
-    const { photos: _photos, ...bienData } = req.body as { photos?: string[] } & Record<string, unknown>;
+    // Whitelist des champs modifiables — on ne propage jamais req.body directement
+    const CHAMPS_MODIFIABLES = [
+      'titre', 'description', 'type_bien', 'type_transaction',
+      'prix', 'surface', 'nb_pieces', 'nb_chambres',
+      'adresse', 'ville', 'code_postal', 'latitude', 'longitude',
+      'statut', 'agence_id',
+    ] as const;
+
+    const bienData: Record<string, unknown> = {};
+    for (const champ of CHAMPS_MODIFIABLES) {
+      if (req.body[champ] !== undefined) bienData[champ] = req.body[champ];
+    }
 
     const { error } = await supabase
       .from('biens')

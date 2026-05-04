@@ -14,14 +14,16 @@ import {
   deleteBien,
 } from '../controllers/biensController';
 import { authenticate, requireRole } from '../middlewares/auth';
+import { validate } from '../middlewares/validate';
+import { bienSchema, bienUpdateSchema } from '../validators/schemas';
 
 const router = Router();
 
 router.get('/',    getAllBiens);
 router.get('/:id', getBienById);
 
-router.post(  '/',    authenticate, requireRole('commercial', 'admin'), createBien);
-router.put(   '/:id', authenticate, requireRole('commercial', 'admin'), updateBien);
-router.delete('/:id', authenticate, requireRole('admin'),               deleteBien);
+router.post(  '/',    authenticate, requireRole('commercial', 'admin'), validate(bienSchema),       createBien);
+router.put(   '/:id', authenticate, requireRole('commercial', 'admin'), validate(bienUpdateSchema), updateBien);
+router.delete('/:id', authenticate, requireRole('admin'),                                           deleteBien);
 
 export default router;

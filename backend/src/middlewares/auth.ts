@@ -27,21 +27,26 @@ declare global {
 }
 
 // ─── authenticate ─────────────────────────────────────────────────────────────
-// Vérifie le token JWT dans le header Authorization : Bearer <token>
-// Attache req.user si valide, renvoie 401 sinon.
+// Vérifie le JWT depuis le cookie httpOnly sb-token (prioritaire, protégé XSS)
+// ou depuis le header Authorization: Bearer <token> (fallback pour les clients API).
 export async function authenticate(
   req: Request,
   res: Response,
   next: NextFunction
 ): Promise<void> {
-  const authHeader = req.headers.authorization;
+  // Cookie httpOnly en priorité — inaccessible aux scripts (protège contre XSS)
+  const cookieToken = req.cookies?.['sb-token'] as string | undefined;
+  // Fallback sur le header Authorization pour les clients API directs
+  const headerToken = req.headers.authorization?.startsWith('Bearer ')
+    ? req.headers.authorization.split(' ')[1]
+    : undefined;
 
-  if (!authHeader?.startsWith('Bearer ')) {
+  const token = cookieToken ?? headerToken;
+
+  if (!token) {
     res.status(401).json({ success: false, message: 'Token manquant ou mal formé.' });
     return;
   }
-
-  const token = authHeader.split(' ')[1];
 
   // Vérifie le JWT auprès de Supabase et récupère l'utilisateur Auth
   const { data: { user: authUser }, error } = await supabase.auth.getUser(token);

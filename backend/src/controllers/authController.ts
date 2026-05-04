@@ -83,21 +83,28 @@ export async function login(req: Request, res: Response): Promise<void> {
     return;
   }
 
-  res.json({
-    success: true,
-    data: {
-      token:         authData.session.access_token,
-      refresh_token: authData.session.refresh_token,
-      user:          profil,
-    },
+  // Stocke le JWT dans un cookie httpOnly — inaccessible aux scripts JS (protège contre XSS)
+  // secure: true uniquement en production (HTTPS requis), false en développement (HTTP)
+  res.cookie('sb-token', authData.session.access_token, {
+    httpOnly: true,
+    secure:   process.env.NODE_ENV === 'production',
+    sameSite: 'strict', // bloque l'envoi du cookie depuis d'autres sites (anti-CSRF)
+    maxAge:   7 * 24 * 60 * 60 * 1000, // 7 jours en millisecondes
   });
+
+  // Ne retourne plus le token dans le body — il est dans le cookie
+  res.json({ success: true, data: { user: profil } });
 }
 
 // ─── logout ───────────────────────────────────────────────────────────────────
 // POST /api/auth/logout
 export async function logout(_req: Request, res: Response): Promise<void> {
-  // Côté serveur, on invalide la session Supabase globalement si besoin.
-  // Le client doit supprimer son token localement.
+  // Efface le cookie httpOnly côté serveur — le client ne peut pas le faire lui-même
+  res.clearCookie('sb-token', {
+    httpOnly: true,
+    secure:   process.env.NODE_ENV === 'production',
+    sameSite: 'strict',
+  });
   res.json({ success: true, message: 'Déconnexion réussie.' });
 }
 
