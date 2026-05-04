@@ -102,7 +102,7 @@ export default function Navbar() {
             aria-label={darkMode ? 'Passer en mode clair' : 'Passer en mode sombre'}
             title={darkMode ? 'Mode clair' : 'Mode sombre'}
           >
-            {darkMode ? '☀️' : '🌙'}
+            {darkMode ? '☼' : '☽'}
           </button>
         </div>
       </div>

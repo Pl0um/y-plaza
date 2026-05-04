@@ -135,7 +135,7 @@ export default function BienDetailPage() {
             </div>
 
             <p className={styles.adresse}>
-              📍 {bien.adresse}, {bien.code_postal} {bien.ville}
+              ⊙ {bien.adresse}, {bien.code_postal} {bien.ville}
             </p>
 
             {/* Stats */}

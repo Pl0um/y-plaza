@@ -60,7 +60,7 @@ export default function BienCard({ bien }: Props) {
         <h3 className={styles.titre}>{bien.titre}</h3>
 
         <p className={styles.ville}>
-          📍 {bien.ville} ({bien.code_postal})
+          ⊙ {bien.ville} ({bien.code_postal})
         </p>
 
         <p className={styles.prix}>
@@ -69,14 +69,14 @@ export default function BienCard({ bien }: Props) {
 
         {/* Statistiques */}
         <div className={styles.stats}>
-          <span className={styles.stat}>⬛ {bien.surface} m²</span>
+          <span className={styles.stat}>□ {bien.surface} m²</span>
 
           {bien.nb_pieces > 0 && (
-            <span className={styles.stat}>🏠 {bien.nb_pieces} pièce{bien.nb_pieces > 1 ? 's' : ''}</span>
+            <span className={styles.stat}>◻ {bien.nb_pieces} pièce{bien.nb_pieces > 1 ? 's' : ''}</span>
           )}
 
           {bien.nb_chambres > 0 && (
-            <span className={styles.stat}>🛏 {bien.nb_chambres} ch.</span>
+            <span className={styles.stat}>⊟ {bien.nb_chambres} ch.</span>
           )}
         </div>
 

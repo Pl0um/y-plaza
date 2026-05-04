@@ -15,7 +15,7 @@ export function errorHandler(
   const statusCode = err.statusCode ?? 500;
   const message = err.message || 'Erreur interne du serveur';
 
-  console.error(`[Erreur ${statusCode}]`, err.message);
+  console.error(`[Erreur ${statusCode}]`, err.message, (err as any).cause ?? '');
 
   res.status(statusCode).json({
     success: false,
