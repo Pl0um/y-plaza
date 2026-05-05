@@ -1,5 +1,6 @@
 import { Request, Response, NextFunction } from 'express';
 import { supabase } from '../supabase';
+import { logSecurityEvent } from '../utils/securityLogger';
 
 // ── Type retourné par Supabase (photos dans une table séparée) ────────────────
 interface SupabaseBien {
@@ -211,6 +212,8 @@ export async function deleteBien(req: Request, res: Response, next: NextFunction
       .eq('id', req.params.id);
 
     if (error) throw error;
+
+    logSecurityEvent('BIEN_DELETED', req.ip ?? 'unknown', { bienId: req.params.id, deletedBy: req.user?.id });
 
     res.json({ success: true, message: 'Bien supprimé avec succès' });
   } catch (err) {

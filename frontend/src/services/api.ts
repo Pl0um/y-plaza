@@ -24,15 +24,58 @@ import type {
 const http = axios.create({
   baseURL:         '/api',
   headers:         { 'Content-Type': 'application/json' },
-  // Envoie automatiquement le cookie sb-token avec chaque requête cross-origin
   withCredentials: true,
 });
 
-// Intercepteur de réponse : si 401, le cookie est expiré — pas de nettoyage manuel nécessaire
-// (le cookie httpOnly est géré côté serveur via clearCookie sur /auth/logout)
+// ─── Intercepteur de refresh automatique ─────────────────────────────────────
+// Sur 401 : tente de renouveler le JWT via /auth/refresh (cookie httpOnly).
+// Requêtes concurrentes mises en attente pendant le refresh (pattern queue).
+// Si le refresh échoue : dispatch 'auth:session-expired' pour déconnecter l'UI.
+
+let isRefreshing = false;
+type QueueEntry = { resolve: () => void; reject: (err: unknown) => void };
+let queue: QueueEntry[] = [];
+
+const flushQueue = (err: unknown) => {
+  queue.forEach(({ resolve, reject }) => (err ? reject(err) : resolve()));
+  queue = [];
+};
+
 http.interceptors.response.use(
   (response) => response,
-  (error) => Promise.reject(error)
+  async (error) => {
+    const original = error.config as (typeof error.config) & { _retry?: boolean };
+
+    // Ignore les erreurs non-401, les retries déjà tentés, et l'endpoint refresh lui-même
+    if (
+      error.response?.status !== 401 ||
+      original._retry ||
+      (original.url as string | undefined)?.includes('/auth/refresh')
+    ) {
+      return Promise.reject(error);
+    }
+
+    if (isRefreshing) {
+      return new Promise<void>((resolve, reject) => {
+        queue.push({ resolve, reject });
+      }).then(() => http(original));
+    }
+
+    original._retry  = true;
+    isRefreshing     = true;
+
+    try {
+      await http.post('/auth/refresh');
+      flushQueue(null);
+      return http(original);
+    } catch (refreshError) {
+      flushQueue(refreshError);
+      window.dispatchEvent(new CustomEvent('auth:session-expired'));
+      return Promise.reject(refreshError);
+    } finally {
+      isRefreshing = false;
+    }
+  }
 );
 
 // ─── Auth ─────────────────────────────────────────────────────────────────────

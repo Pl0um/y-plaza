@@ -4,6 +4,7 @@ import dotenv from 'dotenv';
 import helmet from 'helmet';
 import rateLimit from 'express-rate-limit';
 import cookieParser from 'cookie-parser';
+import morgan from 'morgan';
 
 import authRoutes          from './routes/auth';
 import biensRoutes         from './routes/biens';
@@ -46,6 +47,10 @@ app.use(helmet({
 
 // Masque le header "X-Powered-By: Express" pour ne pas révéler la stack technique
 app.disable('x-powered-by');
+
+// ─── Logs HTTP ────────────────────────────────────────────────────────────────
+// 'dev' en développement (coloré, concis), 'combined' en production (format Apache)
+app.use(morgan(process.env.NODE_ENV === 'production' ? 'combined' : 'dev'));
 
 // ─── Sécurité — Rate Limiting ─────────────────────────────────────────────────
 
@@ -97,6 +102,15 @@ app.use('/api/auth/invite', rateLimit({
   windowMs: 60 * 60 * 1000,
   max: 10,
   message: { success: false, error: "Limite d'invitations atteinte. Réessayez dans 1 heure." },
+  standardHeaders: true,
+  legacyHeaders: false,
+}));
+
+// Refresh token : 30 / 15 min / IP — empêche le bruteforce de refresh tokens volés
+app.use('/api/auth/refresh', rateLimit({
+  windowMs: 15 * 60 * 1000,
+  max: 30,
+  message: { success: false, error: 'Trop de tentatives de renouvellement. Réessayez dans 15 minutes.' },
   standardHeaders: true,
   legacyHeaders: false,
 }));

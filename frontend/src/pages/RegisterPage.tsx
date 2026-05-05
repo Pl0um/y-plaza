@@ -4,6 +4,65 @@ import { Link } from 'react-router-dom';
 import { apiRegister } from '../services/api';
 import styles from './LoginPage.module.css'; // réutilise le même CSS
 
+// ─── Indicateur de force du mot de passe ─────────────────────────────────────
+
+const CRITERES = [
+  { label: '8 caractères minimum', test: (p: string) => p.length >= 8 },
+  { label: 'Une majuscule',         test: (p: string) => /[A-Z]/.test(p) },
+  { label: 'Un chiffre',            test: (p: string) => /[0-9]/.test(p) },
+  { label: 'Un caractère spécial',  test: (p: string) => /[!@#$%^&*(),.?":{}|<>_\-]/.test(p) },
+];
+
+const NIVEAUX = [
+  { label: 'Très faible', color: '#EF4444' },
+  { label: 'Faible',      color: '#F97316' },
+  { label: 'Moyen',       color: '#EAB308' },
+  { label: 'Fort',        color: '#22C55E' },
+  { label: 'Très fort',   color: '#16A34A' },
+];
+
+function PasswordStrength({ password }: { password: string }) {
+  if (!password) return null;
+
+  const score = CRITERES.filter(c => c.test(password)).length;
+  const niveau = NIVEAUX[score];
+
+  return (
+    <div style={{ display: 'flex', flexDirection: 'column', gap: '0.4rem', marginTop: '0.25rem' }}>
+      {/* Barres */}
+      <div style={{ display: 'flex', gap: '4px' }}>
+        {CRITERES.map((_, i) => (
+          <div
+            key={i}
+            style={{
+              flex: 1,
+              height: '4px',
+              borderRadius: '2px',
+              backgroundColor: i < score ? niveau.color : 'var(--color-border)',
+              transition: 'background-color 0.2s',
+            }}
+          />
+        ))}
+      </div>
+      {/* Label + critères non remplis */}
+      <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start' }}>
+        <span style={{ fontSize: '0.75rem', color: niveau.color, fontWeight: 600 }}>
+          {niveau.label}
+        </span>
+        <ul style={{ margin: 0, padding: 0, listStyle: 'none', textAlign: 'right' }}>
+          {CRITERES.filter(c => !c.test(password)).map(c => (
+            <li key={c.label} style={{ fontSize: '0.7rem', color: 'var(--color-text-muted)' }}>
+              {c.label}
+            </li>
+          ))}
+        </ul>
+      </div>
+    </div>
+  );
+}
+
+// ─────────────────────────────────────────────────────────────────────────────
+
 export default function RegisterPage() {
   const [prenom,   setPrenom]   = useState('');
   const [nom,      setNom]      = useState('');
@@ -116,6 +175,7 @@ export default function RegisterPage() {
               required
               autoComplete="new-password"
             />
+            <PasswordStrength password={password} />
           </div>
 
           <div className={styles.field}>

@@ -1,6 +1,7 @@
 import { Request, Response, NextFunction } from 'express';
 import { supabase } from '../supabase';
 import type { Role } from '../middlewares/auth';
+import { logSecurityEvent } from '../utils/securityLogger';
 
 // GET /api/utilisateurs — liste tous les utilisateurs (directeur/admin)
 export async function getAllUtilisateurs(_req: Request, res: Response, next: NextFunction): Promise<void> {
@@ -53,6 +54,13 @@ export async function updateUtilisateurRole(req: Request, res: Response): Promis
   if (error || !data) {
     res.status(404).json({ success: false, message: 'Utilisateur introuvable.' });
     return;
+  }
+
+  if (role !== undefined) {
+    logSecurityEvent('ROLE_CHANGED', req.ip ?? 'unknown', { targetId: id, newRole: role, changedBy: req.user?.id });
+  }
+  if (actif === false) {
+    logSecurityEvent('COMPTE_DESACTIVE', req.ip ?? 'unknown', { targetId: id, changedBy: req.user?.id });
   }
 
   res.json({ success: true, data });

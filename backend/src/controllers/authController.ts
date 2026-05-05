@@ -2,6 +2,7 @@
 import { Request, Response } from 'express';
 import { supabase } from '../supabase';
 import type { Role } from '../middlewares/auth';
+import { logSecurityEvent } from '../utils/securityLogger';
 
 // ─── register ─────────────────────────────────────────────────────────────────
 // POST /api/auth/register
@@ -39,6 +40,8 @@ export async function register(req: Request, res: Response): Promise<void> {
     return;
   }
 
+  logSecurityEvent('REGISTER_SUCCESS', req.ip ?? 'unknown', { email });
+
   res.status(201).json({
     success: true,
     message: 'Inscription réussie. Vérifiez votre email pour confirmer votre compte.',
@@ -62,6 +65,7 @@ export async function login(req: Request, res: Response): Promise<void> {
   });
 
   if (authError || !authData.session) {
+    logSecurityEvent('LOGIN_FAILED', req.ip ?? 'unknown', { email });
     res.status(401).json({ success: false, message: 'Email ou mot de passe incorrect.' });
     return;
   }
@@ -79,18 +83,30 @@ export async function login(req: Request, res: Response): Promise<void> {
   }
 
   if (!profil.actif) {
+    logSecurityEvent('LOGIN_COMPTE_DESACTIVE', req.ip ?? 'unknown', { email, userId: profil.id });
     res.status(403).json({ success: false, message: 'Compte désactivé. Contactez un administrateur.' });
     return;
   }
 
-  // Stocke le JWT dans un cookie httpOnly — inaccessible aux scripts JS (protège contre XSS)
-  // secure: true uniquement en production (HTTPS requis), false en développement (HTTP)
-  res.cookie('sb-token', authData.session.access_token, {
+  const cookieOpts = {
     httpOnly: true,
     secure:   process.env.NODE_ENV === 'production',
-    sameSite: 'strict', // bloque l'envoi du cookie depuis d'autres sites (anti-CSRF)
-    maxAge:   7 * 24 * 60 * 60 * 1000, // 7 jours en millisecondes
+    sameSite: 'strict' as const,
+  };
+
+  // Access token : durée de vie courte (1 h côté Supabase) — renouvelé automatiquement via /refresh
+  res.cookie('sb-token', authData.session.access_token, {
+    ...cookieOpts,
+    maxAge: 7 * 24 * 60 * 60 * 1000, // cookie 7 j, JWT interne expire en 1 h
   });
+
+  // Refresh token : stocké httpOnly, permet de renouveler le JWT sans redemander le mot de passe
+  res.cookie('sb-refresh-token', authData.session.refresh_token, {
+    ...cookieOpts,
+    maxAge: 7 * 24 * 60 * 60 * 1000, // aligné sur la durée de vie Supabase par défaut
+  });
+
+  logSecurityEvent('LOGIN_SUCCESS', req.ip ?? 'unknown', { email, role: profil.role });
 
   // Ne retourne plus le token dans le body — il est dans le cookie
   res.json({ success: true, data: { user: profil } });
@@ -98,14 +114,56 @@ export async function login(req: Request, res: Response): Promise<void> {
 
 // ─── logout ───────────────────────────────────────────────────────────────────
 // POST /api/auth/logout
-export async function logout(_req: Request, res: Response): Promise<void> {
-  // Efface le cookie httpOnly côté serveur — le client ne peut pas le faire lui-même
-  res.clearCookie('sb-token', {
+export async function logout(req: Request, res: Response): Promise<void> {
+  logSecurityEvent('LOGOUT', req.ip ?? 'unknown', { userId: req.user?.id });
+
+  const cookieOpts = {
     httpOnly: true,
     secure:   process.env.NODE_ENV === 'production',
-    sameSite: 'strict',
-  });
+    sameSite: 'strict' as const,
+  };
+
+  res.clearCookie('sb-token',         cookieOpts);
+  res.clearCookie('sb-refresh-token', cookieOpts);
   res.json({ success: true, message: 'Déconnexion réussie.' });
+}
+
+// ─── refresh ──────────────────────────────────────────────────────────────────
+// POST /api/auth/refresh  (public)
+// Renouvelle le JWT grâce au refresh token stocké en cookie httpOnly.
+// Appelé automatiquement par le client lors d'une réponse 401.
+export async function refresh(req: Request, res: Response): Promise<void> {
+  const refreshToken = req.cookies?.['sb-refresh-token'] as string | undefined;
+
+  if (!refreshToken) {
+    res.status(401).json({ success: false, message: 'Session expirée.' });
+    return;
+  }
+
+  const { data, error } = await supabase.auth.refreshSession({ refresh_token: refreshToken });
+
+  if (error || !data.session) {
+    const cookieOpts = {
+      httpOnly: true,
+      secure:   process.env.NODE_ENV === 'production',
+      sameSite: 'strict' as const,
+    };
+    res.clearCookie('sb-token',         cookieOpts);
+    res.clearCookie('sb-refresh-token', cookieOpts);
+    res.status(401).json({ success: false, message: 'Session expirée. Veuillez vous reconnecter.' });
+    return;
+  }
+
+  const cookieOpts = {
+    httpOnly: true,
+    secure:   process.env.NODE_ENV === 'production',
+    sameSite: 'strict' as const,
+    maxAge:   7 * 24 * 60 * 60 * 1000,
+  };
+
+  res.cookie('sb-token',         data.session.access_token,  cookieOpts);
+  res.cookie('sb-refresh-token', data.session.refresh_token, cookieOpts);
+  res.json({ success: true, message: 'Session renouvelée.' });
 }
 
 // ─── me ───────────────────────────────────────────────────────────────────────
@@ -212,6 +270,8 @@ export async function invite(req: Request, res: Response): Promise<void> {
     res.status(400).json({ success: false, message: error.message });
     return;
   }
+
+  logSecurityEvent('INVITE_SENT', req.ip ?? 'unknown', { email, role, invitedBy: req.user?.id });
 
   res.status(201).json({
     success: true,

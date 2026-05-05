@@ -34,12 +34,21 @@ export function AuthProvider({ children }: { children: ReactNode }) {
   const [loading, setLoading] = useState(true);
 
   // Au montage : tente de récupérer le profil via le cookie httpOnly existant.
-  // Si le cookie est absent ou expiré, apiMe() échoue silencieusement → user = null.
+  // L'intercepteur axios tentera un refresh automatique si le JWT est expiré.
+  // Si le refresh échoue aussi, apiMe() rejette → user = null.
   useEffect(() => {
     apiMe()
       .then(profil => setUser(profil))
-      .catch(() => {}) // cookie absent ou expiré — état non connecté
+      .catch(() => {})
       .finally(() => setLoading(false));
+  }, []);
+
+  // Session expirée (refresh token invalide) : l'intercepteur axios dispatch cet événement.
+  // On force la déconnexion côté UI sans appeler le backend (le cookie est déjà effacé).
+  useEffect(() => {
+    const handler = () => setUser(null);
+    window.addEventListener('auth:session-expired', handler);
+    return () => window.removeEventListener('auth:session-expired', handler);
   }, []);
 
   // Connexion : le backend pose le cookie httpOnly, on reçoit uniquement le profil
