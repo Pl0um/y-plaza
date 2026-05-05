@@ -1,6 +1,6 @@
 // Contrôleur d'authentification — KreAgency
 import { Request, Response } from 'express';
-import { supabase } from '../supabase';
+import { supabase, supabaseAuth } from '../supabase';
 import type { Role } from '../middlewares/auth';
 import { logSecurityEvent } from '../utils/securityLogger';
 
@@ -26,7 +26,7 @@ export async function register(req: Request, res: Response): Promise<void> {
     return;
   }
 
-  const { error } = await supabase.auth.signUp({
+  const { error } = await supabaseAuth.auth.signUp({
     email,
     password,
     options: {
@@ -59,7 +59,7 @@ export async function login(req: Request, res: Response): Promise<void> {
     return;
   }
 
-  const { data: authData, error: authError } = await supabase.auth.signInWithPassword({
+  const { data: authData, error: authError } = await supabaseAuth.auth.signInWithPassword({
     email,
     password,
   });
@@ -140,7 +140,7 @@ export async function refresh(req: Request, res: Response): Promise<void> {
     return;
   }
 
-  const { data, error } = await supabase.auth.refreshSession({ refresh_token: refreshToken });
+  const { data, error } = await supabaseAuth.auth.refreshSession({ refresh_token: refreshToken });
 
   if (error || !data.session) {
     const cookieOpts = {
@@ -234,7 +234,7 @@ export async function resetPassword(req: Request, res: Response): Promise<void> 
   }
 
   // Réponse toujours identique pour ne pas révéler si l'email existe
-  await supabase.auth.resetPasswordForEmail(email);
+  await supabaseAuth.auth.resetPasswordForEmail(email);
   res.json({ success: true, message: 'Si un compte existe, un email a été envoyé.' });
 }
 
@@ -262,7 +262,7 @@ export async function invite(req: Request, res: Response): Promise<void> {
     return;
   }
 
-  const { error } = await supabase.auth.admin.inviteUserByEmail(email, {
+  const { error } = await supabaseAuth.auth.admin.inviteUserByEmail(email, {
     data: { nom, prenom, role, agence_id: agence_id ?? null },
   });
 

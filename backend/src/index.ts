@@ -21,6 +21,10 @@ const app = express();
 const PORT        = process.env.PORT        ?? 3000;
 const CORS_ORIGIN = process.env.CORS_ORIGIN ?? 'http://localhost:5173';
 
+// Indique à Express de faire confiance au proxy Nginx (Docker/prod)
+// Nécessaire pour que express-rate-limit lise correctement l'IP réelle via X-Forwarded-For
+app.set('trust proxy', 1);
+
 // ─── Sécurité — Headers HTTP ──────────────────────────────────────────────────
 // Helmet positionne les headers de sécurité standards sur toutes les réponses :
 // X-Frame-Options (anti-clickjacking), X-Content-Type-Options (anti-sniffing),
