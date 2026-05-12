@@ -1,0 +1,112 @@
+.section {
+  position: relative;
+  overflow: hidden;
+  padding: 7rem 0;
+}
+
+/* Image de fond — légèrement floutée, étendue au-delà pour éviter les bords blancs */
+.bgImg {
+  position: absolute;
+  inset: -6px;
+  width: calc(100% + 12px);
+  height: calc(100% + 12px);
+  object-fit: cover;
+  object-position: center;
+  filter: blur(4px);
+  z-index: 0;
+}
+
+/* Voile sombre pour que le texte blanc soit bien lisible */
+.overlay {
+  position: absolute;
+  inset: 0;
+  background: rgba(26, 26, 26, 0.58);
+  z-index: 1;
+}
+
+/* Boîte de texte — aucun fond, aucune bordure, aucun contour */
+.box {
+  position: relative;
+  z-index: 2;
+  max-width: 640px;
+}
+
+.eyebrow {
+  display: inline-block;
+  font-size: 0.72rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.14em;
+  color: rgba(216, 195, 174, 0.9);
+  border-left: 3px solid #38573F;
+  padding-left: 0.75rem;
+  margin-bottom: 1.5rem;
+}
+
+.title {
+  font-family: 'Playfair Display', serif;
+  font-size: clamp(2rem, 4.5vw, 3.2rem);
+  font-weight: 700;
+  line-height: 1.15;
+  color: #fff;
+  letter-spacing: -0.02em;
+  margin-bottom: 1.75rem;
+}
+
+.title em {
+  font-style: italic;
+  color: #D8C3AE;
+}
+
+.text {
+  font-size: 1rem;
+  color: rgba(255, 255, 255, 0.75);
+  line-height: 1.8;
+  margin-bottom: 1.25rem;
+  max-width: 580px;
+}
+
+.actions {
+  display: flex;
+  gap: 1rem;
+  flex-wrap: wrap;
+  margin-top: 2rem;
+}
+
+.btnPrimary {
+  display: inline-flex;
+  align-items: center;
+  height: 50px;
+  padding: 0 2rem;
+  background: #38573F;
+  color: #fff;
+  font-size: 0.88rem;
+  font-weight: 600;
+  letter-spacing: 0.04em;
+  border-radius: 0;
+  transition: opacity 0.25s ease;
+}
+.btnPrimary:hover { opacity: 0.85; }
+
+.btnGhost {
+  display: inline-flex;
+  align-items: center;
+  height: 50px;
+  padding: 0 2rem;
+  background: transparent;
+  color: #fff;
+  border: 1.5px solid rgba(255, 255, 255, 0.5);
+  font-size: 0.88rem;
+  font-weight: 600;
+  letter-spacing: 0.04em;
+  border-radius: 0;
+  transition: background 0.25s ease, border-color 0.25s ease;
+}
+.btnGhost:hover {
+  background: rgba(255, 255, 255, 0.08);
+  border-color: rgba(255, 255, 255, 0.85);
+}
+
+@media (max-width: 640px) {
+  .actions { flex-direction: column; align-items: flex-start; }
+}

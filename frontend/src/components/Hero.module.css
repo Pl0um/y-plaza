@@ -1,0 +1,218 @@
+.hero {
+  position: relative;
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  background-image: url('/images/Maisonpageaccueil.jpeg');
+  background-size: cover;
+  background-position: center top;
+  padding-bottom: 7rem;
+}
+
+@media (min-width: 769px) {
+  .hero { background-attachment: fixed; }
+}
+
+.overlay {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    to right,
+    rgba(26, 26, 26, 0.82) 0%,
+    rgba(26, 26, 26, 0.52) 55%,
+    rgba(26, 26, 26, 0.18) 100%
+  );
+}
+
+.content {
+  position: relative;
+  z-index: 1;
+  max-width: 660px;
+  padding-top: 7rem;
+}
+
+.eyebrow {
+  display: inline-block;
+  font-size: 0.72rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.14em;
+  color: rgba(216, 195, 174, 0.9);
+  border-left: 3px solid #38573F;
+  padding-left: 0.75rem;
+  margin-bottom: 1.5rem;
+}
+
+.title {
+  font-family: 'Playfair Display', serif;
+  font-size: clamp(2.6rem, 6vw, 4.2rem);
+  font-weight: 700;
+  line-height: 1.12;
+  color: #fff;
+  margin-bottom: 1.5rem;
+  letter-spacing: -0.02em;
+}
+
+.title em {
+  font-style: italic;
+  color: #D8C3AE;
+}
+
+.subtitle {
+  font-size: 1.05rem;
+  color: rgba(255, 255, 255, 0.7);
+  line-height: 1.75;
+  margin-bottom: 2.5rem;
+  max-width: 500px;
+}
+
+.actions {
+  display: flex;
+  gap: 1rem;
+  flex-wrap: wrap;
+}
+
+.btnPrimary {
+  display: inline-flex;
+  align-items: center;
+  height: 52px;
+  padding: 0 2.25rem;
+  background: #38573F;
+  color: #fff;
+  font-size: 0.9rem;
+  font-weight: 600;
+  letter-spacing: 0.04em;
+  border-radius: 0;
+  transition: opacity 0.25s ease;
+}
+.btnPrimary:hover { opacity: 0.85; }
+
+.btnOutline {
+  display: inline-flex;
+  align-items: center;
+  height: 52px;
+  padding: 0 2.25rem;
+  background: transparent;
+  color: #fff;
+  border: 1.5px solid rgba(255, 255, 255, 0.55);
+  font-size: 0.9rem;
+  font-weight: 600;
+  letter-spacing: 0.04em;
+  border-radius: 0;
+  transition: background 0.25s ease, border-color 0.25s ease;
+}
+.btnOutline:hover {
+  background: rgba(255, 255, 255, 0.1);
+  border-color: rgba(255, 255, 255, 0.9);
+}
+
+/* ─── Barre de recherche ─────────────────────────────── */
+.searchBar {
+  display: flex;
+  align-items: stretch;
+  background: #fff;
+  max-width: 580px;
+  margin-bottom: 1.25rem;
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.2);
+}
+
+.searchField {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  padding: 0.875rem 1.375rem;
+}
+
+.searchLabel {
+  font-size: 0.6rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.12em;
+  color: #38573F;
+  margin-bottom: 0.25rem;
+}
+
+.searchInput,
+.searchSelect {
+  border: none;
+  outline: none;
+  background: transparent;
+  font-size: 0.9rem;
+  color: #1a1a1a;
+  font-family: inherit;
+  width: 100%;
+}
+
+.searchSelect { cursor: pointer; }
+
+.searchSep {
+  width: 1px;
+  background: rgba(56, 87, 63, 0.15);
+  margin: 0.875rem 0;
+}
+
+.searchBtn {
+  background: #38573F;
+  color: #fff;
+  border: none;
+  padding: 0 1.75rem;
+  font-size: 0.85rem;
+  font-weight: 600;
+  font-family: inherit;
+  letter-spacing: 0.04em;
+  cursor: pointer;
+  transition: opacity 0.25s ease;
+  white-space: nowrap;
+  border-radius: 0;
+  flex-shrink: 0;
+}
+.searchBtn:hover { opacity: 0.85; }
+
+/* ─── Stats intégrées ────────────────────────────────── */
+.statsRow {
+  margin-top: 3rem;
+  max-width: 500px;
+}
+
+.statsDivider {
+  border: none;
+  border-top: 1px solid rgba(255, 255, 255, 0.22);
+  margin-bottom: 1.75rem;
+}
+
+.statsGrid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 1rem;
+}
+
+.statItem {
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
+}
+
+.statValue {
+  font-family: 'Playfair Display', serif;
+  font-size: 1.6rem;
+  font-weight: 700;
+  color: #fff;
+  line-height: 1;
+}
+
+.statLabel {
+  font-size: 0.7rem;
+  font-weight: 500;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: rgba(216, 195, 174, 0.75);
+}
+
+@media (max-width: 640px) {
+  .searchBar { flex-direction: column; max-width: 100%; }
+  .searchSep { width: 100%; height: 1px; margin: 0 1.375rem; width: auto; }
+  .searchBtn { padding: 1rem; }
+  .statsGrid { grid-template-columns: repeat(2, 1fr); gap: 1.25rem 1rem; }
+  .statsRow { max-width: 100%; }
+}

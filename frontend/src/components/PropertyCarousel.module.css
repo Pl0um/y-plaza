@@ -1,0 +1,195 @@
+/* ─── Section wrapper ───────────────────────────────────── */
+.section {
+  position: relative;
+  overflow: hidden;
+}
+
+/* Image de fond — positionnée en absolu dans la section */
+.bgImg {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center;
+  z-index: 0;
+}
+
+/* Voile blanc légèrement opaque */
+.bgOverlay {
+  position: absolute;
+  inset: 0;
+  background: rgba(255, 255, 255, 0.62);
+  z-index: 1;
+}
+
+/* Tout le contenu passe au-dessus du fond */
+.inner {
+  position: relative;
+  z-index: 2;
+  padding: 5rem 0 4rem;
+}
+
+/* ─── Header ────────────────────────────────────────────── */
+.header {
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+  margin-bottom: 2.5rem;
+  gap: 1rem;
+  flex-wrap: wrap;
+}
+
+.eyebrow {
+  display: block;
+  font-size: 0.7rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.14em;
+  color: #38573F;
+  margin-bottom: 0.5rem;
+}
+
+.title {
+  font-family: 'Playfair Display', serif;
+  font-size: clamp(1.6rem, 3vw, 2.2rem);
+  font-weight: 700;
+  color: var(--c-text);
+  letter-spacing: -0.02em;
+}
+
+.seeAll {
+  font-size: 0.875rem;
+  font-weight: 600;
+  color: #38573F;
+  white-space: nowrap;
+  border-bottom: 1.5px solid #38573F;
+  padding-bottom: 1px;
+  transition: opacity 0.25s ease;
+}
+.seeAll:hover { opacity: 0.7; }
+
+/* ─── Swiper wrapper ─────────────────────────────────────── */
+.swiperWrap {
+  max-width: 1280px;
+  margin: 0 auto;
+  padding: 0 2rem;
+}
+
+.swiper {
+  padding-bottom: 3rem !important;
+}
+
+/* ─── Card (horizontal layout) ───────────────────────────── */
+.card {
+  display: grid;
+  grid-template-columns: 58% 42%;
+  min-height: 420px;
+  background: var(--c-white);
+  overflow: hidden;
+  box-shadow: 0 8px 32px rgba(26, 26, 26, 0.12);
+}
+
+.imgWrap {
+  position: relative;
+  overflow: hidden;
+}
+
+.img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform 0.8s ease;
+}
+
+.card:hover .img { transform: scale(1.03); }
+
+/* ─── Info panel ─────────────────────────────────────────── */
+.body {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  padding: 2.5rem 2.75rem;
+  gap: 0.875rem;
+}
+
+.typeBadge {
+  display: inline-block;
+  align-self: flex-start;
+  background: #38573F;
+  color: #fff;
+  font-size: 0.65rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.12em;
+  padding: 0.3rem 0.75rem;
+}
+
+.prix {
+  font-family: 'Playfair Display', serif;
+  font-size: clamp(1.6rem, 2.5vw, 2.2rem);
+  font-weight: 700;
+  color: #38573F;
+  line-height: 1;
+  margin: 0;
+}
+
+.cardTitle {
+  font-size: 1.1rem;
+  font-weight: 600;
+  color: var(--c-text);
+  line-height: 1.3;
+  margin: 0;
+}
+
+.specs {
+  display: flex;
+  align-items: center;
+  gap: 0.625rem;
+  font-size: 0.875rem;
+  color: var(--c-text-sec);
+  flex-wrap: wrap;
+}
+
+.dot {
+  display: inline-block;
+  width: 4px;
+  height: 4px;
+  background: #38573F;
+  border-radius: 50%;
+  flex-shrink: 0;
+}
+
+.cardLink {
+  display: inline-flex;
+  align-items: center;
+  align-self: flex-start;
+  margin-top: 0.5rem;
+  height: 46px;
+  padding: 0 1.75rem;
+  background: #38573F;
+  color: #fff;
+  font-size: 0.85rem;
+  font-weight: 600;
+  letter-spacing: 0.04em;
+  border-radius: 0;
+  transition: opacity 0.25s ease;
+}
+.cardLink:hover { opacity: 0.85; }
+
+/* ─── Mobile ─────────────────────────────────────────────── */
+@media (max-width: 768px) {
+  .card {
+    grid-template-columns: 1fr;
+    min-height: unset;
+  }
+
+  .imgWrap {
+    aspect-ratio: 16 / 9;
+  }
+
+  .body {
+    padding: 1.75rem 1.5rem;
+    gap: 0.75rem;
+  }
+}

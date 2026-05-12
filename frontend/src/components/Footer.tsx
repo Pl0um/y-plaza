@@ -8,17 +8,21 @@ export default function Footer() {
     <footer className={styles.footer}>
       <div className="container">
         <div className={styles.grid}>
-          {/* Colonne identité */}
           <div>
-            <p className={styles.logo}>Kre<span>Agency</span></p>
-            <p className={styles.description}>
+            <Link to="/" className={styles.logoLink}>
+              <img
+                src="/images/logo_KRE-removebg-preview.png"
+                alt="KRE"
+                className={styles.logo}
+              />
+            </Link>
+            <p className={styles.desc}>
               Groupe immobilier français présent dans 12 villes. Nous accompagnons
               acheteurs, vendeurs et locataires depuis notre siège
-              d'Aix-en-Provence.
+              d&apos;Aix-en-Provence.
             </p>
           </div>
 
-          {/* Navigation rapide */}
           <div>
             <p className={styles.colTitle}>Navigation</p>
             <ul className={styles.colLinks}>
@@ -28,7 +32,6 @@ export default function Footer() {
             </ul>
           </div>
 
-          {/* Contact siège */}
           <div>
             <p className={styles.colTitle}>Siège social</p>
             <div className={styles.contact}>
@@ -36,7 +39,7 @@ export default function Footer() {
                 12 Cours Mirabeau<br />
                 13100 Aix-en-Provence<br />
                 <a href="tel:+33442000001">04 42 00 00 01</a><br />
-                <a href="mailto:siege@kreagency.fr">siege@kreagency.fr</a>
+                <a href="mailto:siege@y-plaza.fr">siege@y-plaza.fr</a>
               </p>
             </div>
           </div>
@@ -45,7 +48,7 @@ export default function Footer() {
         <hr className={styles.divider} />
 
         <div className={styles.bottom}>
-          <span>© {annee} KreAgency — Tous droits réservés</span>
+          <span>© {annee} Y-Plaza — Tous droits réservés</span>
           <span className={styles.badge}>Données fictives — Usage démo</span>
         </div>
       </div>

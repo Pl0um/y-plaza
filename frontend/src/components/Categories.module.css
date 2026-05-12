@@ -1,0 +1,93 @@
+.section {
+  padding: 5rem 0;
+  background: var(--c-bg);
+}
+
+.header {
+  margin-bottom: 2.5rem;
+}
+
+.eyebrow {
+  display: block;
+  font-size: 0.7rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.14em;
+  color: #38573F;
+  margin-bottom: 0.6rem;
+}
+
+.title {
+  font-family: 'Playfair Display', serif;
+  font-size: clamp(1.6rem, 3vw, 2.2rem);
+  font-weight: 700;
+  color: var(--c-text);
+  letter-spacing: -0.02em;
+}
+
+.grid {
+  display: grid;
+  grid-template-columns: repeat(5, 1fr);
+  gap: 1rem;
+}
+
+.card {
+  background: var(--c-white);
+  border: 1px solid rgba(56, 87, 63, 0.1);
+  border-top: 3px solid #38573F;
+  padding: 2rem 1.5rem;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 0.5rem;
+  cursor: pointer;
+  border-radius: 0;
+  font-family: inherit;
+  text-align: left;
+  transition: background 0.25s ease, color 0.25s ease, transform 0.2s ease;
+}
+
+.card:hover {
+  background: #38573F;
+  color: #fff;
+  transform: translateY(-4px);
+}
+
+.count {
+  font-family: 'Playfair Display', serif;
+  font-size: 2.4rem;
+  font-weight: 700;
+  color: #38573F;
+  line-height: 1;
+  transition: color 0.25s ease;
+}
+
+.card:hover .count { color: rgba(216, 195, 174, 0.9); }
+
+.label {
+  font-size: 0.9rem;
+  font-weight: 600;
+  color: var(--c-text);
+  letter-spacing: 0.01em;
+  transition: color 0.25s ease;
+}
+
+.card:hover .label { color: #fff; }
+
+.cta {
+  font-size: 0.75rem;
+  font-weight: 500;
+  color: #38573F;
+  margin-top: 0.5rem;
+  transition: color 0.25s ease;
+}
+
+.card:hover .cta { color: rgba(216, 195, 174, 0.85); }
+
+@media (max-width: 1024px) {
+  .grid { grid-template-columns: repeat(3, 1fr); }
+}
+
+@media (max-width: 640px) {
+  .grid { grid-template-columns: repeat(2, 1fr); }
+}

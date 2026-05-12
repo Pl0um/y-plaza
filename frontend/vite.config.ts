@@ -7,11 +7,23 @@ export default defineConfig({
 
   server: {
     port: 5173,
-    // Proxy : toutes les requêtes /api → backend Express (évite les problèmes CORS en dev)
     proxy: {
       '/api': {
         target: 'http://localhost:3000',
         changeOrigin: true,
+      },
+    },
+  },
+
+  build: {
+    rollupOptions: {
+      output: {
+        manualChunks: {
+          'vendor-react':        ['react', 'react-dom', 'react-router-dom'],
+          'vendor-motion':       ['framer-motion'],
+          'vendor-swiper':       ['swiper'],
+          'vendor-leaflet':      ['leaflet', 'react-leaflet'],
+        },
       },
     },
   },

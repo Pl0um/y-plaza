@@ -1,163 +1,109 @@
-/* ─── Reset & base ─────────────────────────────────────────────── */
-*, *::before, *::after {
-  box-sizing: border-box;
-  margin: 0;
-  padding: 0;
-}
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Playfair+Display:ital,wght@0,400;0,700;1,400;1,700&display=swap');
 
-/* ─── Variables KreAgency ───────────────────────────────────────── */
+/* ─── Reset ─────────────────────────────────────────────────────── */
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+/* ─── Palette Y-Plaza ────────────────────────────────────────────── */
 :root {
-  --color-primary:      #00B0A0;
-  --color-primary-dark: #008F82;
-  --color-bg:           #FFFFFF;
-  --color-bg-light:     #F5F5F5;
-  --color-text:         #1A1A2E;
-  --color-text-muted:   #6B7280;
-  --color-border:       #E5E7EB;
+  --c-bg:       #D8C3AE;
+  --c-bg-alt:   #c9b09a;
+  --c-accent:   #38573F;
+  --c-text:     #1a1a1a;
+  --c-text-sec: #5a4a3a;
+  --c-footer:   #2a1f17;
+  --c-white:    #ffffff;
+
+  /* Legacy aliases — conservés pour les pages auth/dashboard */
+  --color-primary:      #38573F;
+  --color-primary-dark: #2a4230;
+  --color-bg:           #D8C3AE;
+  --color-bg-light:     #c9b09a;
+  --color-text:         #1a1a1a;
+  --color-text-muted:   #5a4a3a;
+  --color-border:       rgba(56,87,63,0.22);
   --color-success:      #10B981;
   --color-warning:      #F59E0B;
   --color-danger:       #EF4444;
 
   --font-family:   'Inter', system-ui, sans-serif;
-  --border-radius: 8px;
-  --shadow-sm:     0 1px 3px rgba(0, 0, 0, 0.08);
-  --shadow-md:     0 4px 12px rgba(0, 0, 0, 0.10);
-  --shadow-lg:     0 8px 24px rgba(0, 0, 0, 0.12);
-
-  --transition: 0.2s ease;
+  --border-radius: 0px;
+  --shadow-sm:     0 2px 8px rgba(56,87,63,0.10);
+  --shadow-md:     0 6px 20px rgba(56,87,63,0.14);
+  --shadow-lg:     0 12px 36px rgba(56,87,63,0.18);
+  --transition:    0.3s ease;
 }
 
-/* ─── Mode nuit ─────────────────────────────────────────────────── */
-html.dark {
-  --color-bg:         #0F172A;
-  --color-bg-light:   #1E293B;
-  --color-text:       #E2E8F0;
-  --color-text-muted: #94A3B8;
-  --color-border:     #334155;
-  --shadow-sm:        0 1px 3px rgba(0, 0, 0, 0.35);
-  --shadow-md:        0 4px 12px rgba(0, 0, 0, 0.45);
-  --shadow-lg:        0 8px 24px rgba(0, 0, 0, 0.55);
-}
-
-/* ─── Base ──────────────────────────────────────────────────────── */
-html {
-  font-size: 16px;
-  scroll-behavior: smooth;
-}
+/* ─── Base ───────────────────────────────────────────────────────── */
+html { font-size: 16px; scroll-behavior: smooth; }
 
 body {
   font-family: var(--font-family);
-  background-color: var(--color-bg);
-  color: var(--color-text);
+  background-color: var(--c-bg);
+  color: var(--c-text);
   line-height: 1.6;
   -webkit-font-smoothing: antialiased;
-  transition: background-color 0.25s ease, color 0.25s ease;
+  overflow-x: hidden;
 }
 
-a {
-  color: inherit;
-  text-decoration: none;
-}
+a { color: inherit; text-decoration: none; }
+img { max-width: 100%; display: block; }
+button { cursor: pointer; font-family: inherit; }
 
-img {
-  max-width: 100%;
-  display: block;
-}
-
-button {
-  cursor: pointer;
-  font-family: inherit;
-}
-
-/* ─── Utilitaires rapides ───────────────────────────────────────── */
-.container {
-  max-width: 1200px;
-  margin: 0 auto;
-  padding: 0 1.5rem;
-}
+/* ─── Utilitaires ────────────────────────────────────────────────── */
+.container { max-width: 1280px; margin: 0 auto; padding: 0 2rem; }
 
 .btn {
-  display: inline-flex;
-  align-items: center;
-  gap: 0.5rem;
-  padding: 0.625rem 1.25rem;
-  border-radius: var(--border-radius);
-  font-size: 0.9rem;
-  font-weight: 500;
-  border: none;
-  transition: background-color var(--transition), transform var(--transition);
-}
-
-.btn:active {
-  transform: scale(0.98);
-}
-
-.btn-primary {
-  background-color: var(--color-primary);
-  color: #fff;
-}
-
-.btn-primary:hover {
-  background-color: var(--color-primary-dark);
-}
-
-.btn-outline {
-  background-color: transparent;
-  color: var(--color-primary);
-  border: 1.5px solid var(--color-primary);
-}
-
-.btn-outline:hover {
-  background-color: var(--color-primary);
-  color: #fff;
-}
-
-/* ─── Statuts des biens ─────────────────────────────────────────── */
-.badge {
-  display: inline-block;
-  padding: 0.2rem 0.6rem;
-  border-radius: 999px;
-  font-size: 0.75rem;
-  font-weight: 600;
-  text-transform: uppercase;
+  display: inline-flex; align-items: center; gap: 0.5rem;
+  padding: 0.7rem 1.4rem; border-radius: 0;
+  font-size: 0.875rem; font-weight: 600; border: none;
+  transition: opacity var(--transition), transform var(--transition);
   letter-spacing: 0.04em;
 }
+.btn:active { transform: scale(0.98); }
 
-.badge-disponible {
-  background-color: #D1FAE5;
-  color: #065F46;
+.btn-primary { background-color: var(--c-accent); color: #fff; }
+.btn-primary:hover { opacity: 0.88; }
+
+.btn-outline {
+  background: transparent; color: var(--c-accent);
+  border: 1.5px solid var(--c-accent);
 }
+.btn-outline:hover { background: var(--c-accent); color: #fff; }
 
-.badge-sous_compromis {
-  background-color: #FEF3C7;
-  color: #92400E;
-}
-
-.badge-vendu {
-  background-color: #FEE2E2;
-  color: #991B1B;
-}
-
-/* ─── Badges en mode nuit ───────────────────────────────────────── */
-html.dark .badge-disponible {
-  background-color: #064E3B;
-  color: #6EE7B7;
-}
-
-html.dark .badge-sous_compromis {
-  background-color: #78350F;
-  color: #FCD34D;
-}
-
-html.dark .badge-vendu {
-  background-color: #7F1D1D;
-  color: #FCA5A5;
-}
-
-/* ─── Leaflet : forcer la hauteur dans les conteneurs flex ─────── */
+/* ─── Leaflet ────────────────────────────────────────────────────── */
 .leaflet-container {
-  width: 100%;
-  height: 100%;
-  border-radius: var(--border-radius);
-  z-index: 0;
+  width: 100%; height: 100%;
+  border-radius: 0 !important; z-index: 0;
 }
+.leaflet-popup-content-wrapper {
+  border-radius: 0 !important;
+  background: var(--c-bg) !important;
+  color: var(--c-text) !important;
+  box-shadow: var(--shadow-md) !important;
+  border: 1px solid rgba(56,87,63,0.2) !important;
+}
+.leaflet-popup-tip { background: var(--c-bg) !important; }
+
+/* ─── Swiper overrides ───────────────────────────────────────────── */
+.swiper-button-next,
+.swiper-button-prev {
+  background: var(--c-accent) !important;
+  color: #fff !important;
+  width: 44px !important; height: 44px !important;
+  border-radius: 0 !important;
+}
+.swiper-button-next::after,
+.swiper-button-prev::after { font-size: 13px !important; font-weight: 700 !important; }
+
+.swiper-pagination-bullet { background: var(--c-accent) !important; }
+.swiper-pagination-bullet-active { opacity: 1 !important; }
+
+/* ─── Badges ─────────────────────────────────────────────────────── */
+.badge {
+  display: inline-block; padding: 0.2rem 0.6rem;
+  border-radius: 0; font-size: 0.72rem; font-weight: 700;
+  text-transform: uppercase; letter-spacing: 0.08em;
+}
+.badge-disponible { background: var(--c-accent); color: #fff; }
+.badge-sous_compromis { background: #a07840; color: #fff; }
+.badge-vendu { background: #7a2020; color: #fff; }

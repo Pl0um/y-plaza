@@ -25,19 +25,19 @@ export default function App() {
       <AuthProvider>
         <Navbar />
 
-        <div style={{ minHeight: 'calc(100vh - 64px - 320px)' }}>
+        <main>
           <Routes>
             {/* ── Routes publiques ── */}
-            <Route path="/"           element={<HomePage />} />
-            <Route path="/biens"      element={<BiensPage />} />
-            <Route path="/biens/:id"  element={<BienDetailPage />} />
-            <Route path="/agences"    element={<AgencesPage />} />
+            <Route path="/"            element={<HomePage />} />
+            <Route path="/biens"       element={<BiensPage />} />
+            <Route path="/biens/:id"   element={<BienDetailPage />} />
+            <Route path="/agences"     element={<AgencesPage />} />
             <Route path="/agences/:id" element={<AgenceDetailPage />} />
-            <Route path="/login"          element={<LoginPage />} />
-            <Route path="/register"       element={<RegisterPage />} />
-            <Route path="/reset-password" element={<ResetPasswordPage />} />
+            <Route path="/login"           element={<LoginPage />} />
+            <Route path="/register"        element={<RegisterPage />} />
+            <Route path="/reset-password"  element={<ResetPasswordPage />} />
 
-            {/* ── Profil client (tout utilisateur connecté) ── */}
+            {/* ── Profil client ── */}
             <Route path="/profil" element={
               <ProtectedRoute>
                 <ProfilPage />
@@ -51,7 +51,7 @@ export default function App() {
               </ProtectedRoute>
             } />
 
-            {/* ── Dashboard gestionnaire des ventes / admin ── */}
+            {/* ── Dashboard gestionnaire / admin ── */}
             <Route path="/dashboard/transactions" element={
               <ProtectedRoute roles={['gestionnaire_ventes', 'admin']}>
                 <TransactionsPage />
@@ -65,7 +65,7 @@ export default function App() {
               </ProtectedRoute>
             } />
 
-            {/* ── Administration (admin uniquement) ── */}
+            {/* ── Administration ── */}
             <Route path="/admin" element={
               <ProtectedRoute roles={['admin']}>
                 <AdminPage />
@@ -75,17 +75,40 @@ export default function App() {
             {/* ── 404 ── */}
             <Route path="*" element={
               <div style={{
-                textAlign: 'center', padding: '6rem 1.5rem', fontFamily: 'Inter, sans-serif',
+                textAlign: 'center',
+                padding: '8rem 1.5rem',
+                fontFamily: "'Inter', sans-serif",
+                minHeight: '60vh',
+                display: 'flex',
+                flexDirection: 'column',
+                alignItems: 'center',
+                justifyContent: 'center',
               }}>
-                <h1 style={{ fontSize: '4rem', color: '#00B0A0', marginBottom: '1rem' }}>404</h1>
-                <p style={{ color: '#6B7280', marginBottom: '1.5rem' }}>Cette page n'existe pas.</p>
-                <a href="/" style={{ color: '#00B0A0', fontWeight: 600, textDecoration: 'underline' }}>
-                  Retour à l'accueil
+                <h1 style={{
+                  fontFamily: "'Playfair Display', serif",
+                  fontSize: '5rem',
+                  color: '#38573F',
+                  marginBottom: '1rem',
+                  lineHeight: 1,
+                }}>
+                  404
+                </h1>
+                <p style={{ color: '#5a4a3a', marginBottom: '2rem', fontSize: '1.05rem' }}>
+                  Cette page n&apos;existe pas.
+                </p>
+                <a href="/" style={{
+                  color: '#38573F',
+                  fontWeight: 600,
+                  borderBottom: '1.5px solid #38573F',
+                  paddingBottom: '2px',
+                  fontSize: '0.9rem',
+                }}>
+                  Retour à l&apos;accueil
                 </a>
               </div>
             } />
           </Routes>
-        </div>
+        </main>
 
         <Footer />
       </AuthProvider>

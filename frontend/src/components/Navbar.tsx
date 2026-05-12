@@ -1,11 +1,10 @@
-// Navbar — contextuelle selon l'état d'authentification et le rôle — KreAgency
 import { useState, useEffect } from 'react';
 import { NavLink, Link, useNavigate } from 'react-router-dom';
+import { motion } from 'framer-motion';
 import { useAuth } from '../contexts/AuthContext';
 import type { RoleUtilisateur } from '../types';
 import styles from './Navbar.module.css';
 
-// Lien vers le dashboard selon le rôle
 function dashboardLien(role: RoleUtilisateur): { href: string; label: string } {
   switch (role) {
     case 'commercial':          return { href: '/dashboard/annonces',     label: 'Mes annonces' };
@@ -17,95 +16,88 @@ function dashboardLien(role: RoleUtilisateur): { href: string; label: string } {
 }
 
 export default function Navbar() {
-  const navigate               = useNavigate();
+  const navigate = useNavigate();
   const { isAuthenticated, user, role, logout } = useAuth();
-
-  // ── Mode nuit ──────────────────────────────────────────────────────────────
-  const [darkMode, setDarkMode] = useState<boolean>(() => {
-    return localStorage.getItem('theme') === 'dark';
-  });
+  const [scrolled, setScrolled] = useState(false);
 
   useEffect(() => {
-    if (darkMode) {
-      document.documentElement.classList.add('dark');
-      localStorage.setItem('theme', 'dark');
-    } else {
-      document.documentElement.classList.remove('dark');
-      localStorage.setItem('theme', 'light');
-    }
-  }, [darkMode]);
+    const onScroll = () => setScrolled(window.scrollY > 48);
+    window.addEventListener('scroll', onScroll, { passive: true });
+    return () => window.removeEventListener('scroll', onScroll);
+  }, []);
 
-  // ── Déconnexion ────────────────────────────────────────────────────────────
   async function handleLogout() {
     await logout();
     navigate('/', { replace: true });
   }
 
-  const linkClass = ({ isActive }: { isActive: boolean }) =>
-    isActive ? `${styles.link} ${styles.linkActive}` : styles.link;
-
   const dash = role && role !== 'client' ? dashboardLien(role) : null;
 
   return (
-    <nav className={styles.nav}>
+    <motion.nav
+      className={`${styles.nav} ${scrolled ? styles.scrolled : ''}`}
+      initial={{ y: -16, opacity: 0 }}
+      animate={{ y: 0, opacity: 1 }}
+      transition={{ duration: 0.4, ease: 'easeOut' }}
+    >
       <div className={`container ${styles.inner}`}>
-        {/* Logo */}
-        <NavLink to="/" className={styles.logo}>
-          Kre<span>Agency</span>
+        <NavLink to="/" className={styles.logoLink}>
+          <img
+            src="/images/logo_KRE-removebg-preview.png"
+            alt="KRE"
+            className={styles.logo}
+          />
         </NavLink>
 
-        {/* Navigation principale */}
         <ul className={styles.links}>
-          <li><NavLink to="/" end className={linkClass}>Accueil</NavLink></li>
-          <li><NavLink to="/biens" className={linkClass}>Biens</NavLink></li>
-          <li><NavLink to="/agences" className={linkClass}>Agences</NavLink></li>
+          <li>
+            <NavLink
+              to="/" end
+              className={({ isActive }) => `${styles.link} ${isActive ? styles.linkActive : ''}`}
+            >
+              Accueil
+            </NavLink>
+          </li>
+          <li>
+            <NavLink
+              to="/biens"
+              className={({ isActive }) => `${styles.link} ${isActive ? styles.linkActive : ''}`}
+            >
+              Biens
+            </NavLink>
+          </li>
+          <li>
+            <NavLink
+              to="/agences"
+              className={({ isActive }) => `${styles.link} ${isActive ? styles.linkActive : ''}`}
+            >
+              Agences
+            </NavLink>
+          </li>
         </ul>
 
-        {/* Zone auth à droite */}
         <div className={styles.authZone}>
           {isAuthenticated && user ? (
             <>
-              {/* Lien dashboard ou profil selon le rôle */}
-              {dash ? (
-                <NavLink to={dash.href} className={linkClass}>
-                  {dash.label}
-                </NavLink>
-              ) : (
-                <NavLink to="/profil" className={linkClass}>
-                  Mon profil
-                </NavLink>
-              )}
-
-              {/* Nom + déconnexion */}
-              <span className={styles.userName}>
-                {user.prenom}
-              </span>
+              <NavLink
+                to={dash ? dash.href : '/profil'}
+                className={({ isActive }) => `${styles.link} ${isActive ? styles.linkActive : ''}`}
+              >
+                {dash ? dash.label : 'Mon profil'}
+              </NavLink>
+              <span className={styles.userName}>{user.prenom}</span>
               <button className={styles.logoutBtn} onClick={handleLogout}>
                 Déconnexion
               </button>
             </>
           ) : (
             <>
-              <Link to="/login" className={styles.loginBtn}>
-                Connexion
-              </Link>
-              <Link to="/register" className={styles.registerBtn}>
-                S'inscrire
-              </Link>
+              <Link to="/login" className={styles.loginLink}>Connexion</Link>
+              <Link to="/register" className={styles.registerBtn}>S'inscrire</Link>
             </>
           )}
-
-          {/* Bouton mode nuit */}
-          <button
-            className={styles.darkToggle}
-            onClick={() => setDarkMode(d => !d)}
-            aria-label={darkMode ? 'Passer en mode clair' : 'Passer en mode sombre'}
-            title={darkMode ? 'Mode clair' : 'Mode sombre'}
-          >
-            {darkMode ? '☼' : '☽'}
-          </button>
         </div>
       </div>
-    </nav>
+    </motion.nav>
   );
 }

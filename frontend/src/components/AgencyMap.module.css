@@ -1,0 +1,55 @@
+.section {
+  padding: 5rem 0 0;
+  background: var(--c-bg);
+}
+
+.header {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 2rem;
+  flex-wrap: wrap;
+  margin-bottom: 2.5rem;
+}
+
+.eyebrow {
+  display: block;
+  font-size: 0.7rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.14em;
+  color: #38573F;
+  margin-bottom: 0.5rem;
+}
+
+.title {
+  font-family: 'Playfair Display', serif;
+  font-size: clamp(1.6rem, 3vw, 2.2rem);
+  font-weight: 700;
+  color: var(--c-text);
+  letter-spacing: -0.02em;
+  margin-bottom: 0.75rem;
+}
+
+.desc {
+  font-size: 0.9rem;
+  color: var(--c-text-sec);
+  max-width: 480px;
+  line-height: 1.7;
+}
+
+.seeAll {
+  font-size: 0.875rem;
+  font-weight: 600;
+  color: #38573F;
+  white-space: nowrap;
+  border-bottom: 1.5px solid #38573F;
+  padding-bottom: 1px;
+  transition: opacity 0.25s ease;
+  align-self: flex-end;
+}
+.seeAll:hover { opacity: 0.7; }
+
+.mapWrap {
+  width: 100%;
+}
