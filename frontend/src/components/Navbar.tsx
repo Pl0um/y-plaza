@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import { NavLink, Link, useNavigate } from 'react-router-dom';
+import { NavLink, Link, useNavigate, useLocation } from 'react-router-dom';
 import { motion } from 'framer-motion';
 import { useAuth } from '../contexts/AuthContext';
 import type { RoleUtilisateur } from '../types';
@@ -17,8 +17,10 @@ function dashboardLien(role: RoleUtilisateur): { href: string; label: string } {
 
 export default function Navbar() {
   const navigate = useNavigate();
+  const location = useLocation();
   const { isAuthenticated, user, role, logout } = useAuth();
   const [scrolled, setScrolled] = useState(false);
+  const isHome = location.pathname === '/';
 
   useEffect(() => {
     const onScroll = () => setScrolled(window.scrollY > 48);
@@ -35,7 +37,7 @@ export default function Navbar() {
 
   return (
     <motion.nav
-      className={`${styles.nav} ${scrolled ? styles.scrolled : ''}`}
+      className={`${styles.nav} ${(scrolled || !isHome) ? styles.scrolled : ''}`}
       initial={{ y: -16, opacity: 0 }}
       animate={{ y: 0, opacity: 1 }}
       transition={{ duration: 0.4, ease: 'easeOut' }}

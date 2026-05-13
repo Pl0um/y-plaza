@@ -12,9 +12,9 @@
 
 .scrolled {
   --nav-logo-filter: none;
-  --nav-link:       #1a1a1a;
-  --nav-link-hover: #38573F;
-  background: rgba(216, 195, 174, 0.95);
+  --nav-link:       #38573F;
+  --nav-link-hover: #2a4230;
+  background: rgba(245, 239, 230, 0.95);
   border-bottom: 1px solid rgba(56, 87, 63, 0.35);
   backdrop-filter: blur(10px);
 }

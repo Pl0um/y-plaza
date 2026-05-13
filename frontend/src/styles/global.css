@@ -5,8 +5,8 @@
 
 /* ─── Palette Y-Plaza ────────────────────────────────────────────── */
 :root {
-  --c-bg:       #D8C3AE;
-  --c-bg-alt:   #c9b09a;
+  --c-bg:       #f5efe6;
+  --c-bg-alt:   #e8ddd1;
   --c-accent:   #38573F;
   --c-text:     #1a1a1a;
   --c-text-sec: #5a4a3a;
@@ -16,8 +16,8 @@
   /* Legacy aliases — conservés pour les pages auth/dashboard */
   --color-primary:      #38573F;
   --color-primary-dark: #2a4230;
-  --color-bg:           #D8C3AE;
-  --color-bg-light:     #c9b09a;
+  --color-bg:           #f5efe6;
+  --color-bg-light:     #e8ddd1;
   --color-text:         #1a1a1a;
   --color-text-muted:   #5a4a3a;
   --color-border:       rgba(56,87,63,0.22);
