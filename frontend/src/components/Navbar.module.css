@@ -11,11 +11,11 @@
 }
 
 .scrolled {
-  --nav-logo-filter: none;
-  --nav-link:       #38573F;
-  --nav-link-hover: #2a4230;
-  background: rgba(245, 239, 230, 0.95);
-  border-bottom: 1px solid rgba(56, 87, 63, 0.35);
+  --nav-logo-filter: brightness(0) invert(1);
+  --nav-link:       #fff;
+  --nav-link-hover: #D8C3AE;
+  background: rgba(56, 87, 63, 0.97);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.12);
   backdrop-filter: blur(10px);
 }
 
@@ -46,7 +46,7 @@
 }
 
 .link {
-  font-size: 0.88rem;
+  font-size: 1rem;
   font-weight: 500;
   color: var(--nav-link);
   transition: color 0.25s ease;
@@ -83,7 +83,7 @@
 }
 
 .loginLink {
-  font-size: 0.875rem;
+  font-size: 1rem;
   font-weight: 500;
   color: var(--nav-link);
   transition: color 0.25s ease;
@@ -91,12 +91,12 @@
 .loginLink:hover { color: var(--nav-link-hover); }
 
 .registerBtn {
-  height: 38px;
-  padding: 0 1.25rem;
-  background: #38573F;
-  color: #fff;
+  height: 42px;
+  padding: 0 1.5rem;
+  background: #D8C3AE;
+  color: #1a1a1a;
   border-radius: 0;
-  font-size: 0.85rem;
+  font-size: 1rem;
   font-weight: 600;
   display: flex;
   align-items: center;

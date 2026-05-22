@@ -1,6 +1,6 @@
 .wrapper {
-  background: var(--color-bg);
-  border: 1px solid var(--color-border);
+  background: #38573F;
+  border: none;
   border-radius: var(--border-radius);
   padding: 1.25rem 1.5rem;
   box-shadow: var(--shadow-sm);
@@ -23,7 +23,7 @@
 .label {
   font-size: 0.78rem;
   font-weight: 600;
-  color: var(--color-text-muted);
+  color: rgba(255, 255, 255, 0.75);
   text-transform: uppercase;
   letter-spacing: 0.04em;
 }
@@ -32,20 +32,22 @@
 .select {
   height: 40px;
   padding: 0 0.75rem;
-  border: 1.5px solid var(--color-border);
+  border: 1.5px solid rgba(255, 255, 255, 0.25);
   border-radius: var(--border-radius);
   font-size: 0.875rem;
   font-family: inherit;
-  color: var(--color-text);
-  background: var(--color-bg);
+  color: #1a1a1a;
+  background: #f5efe6;
   transition: border-color var(--transition);
   width: 100%;
 }
 
+.input::placeholder { color: #5a4a3a; }
+
 .input:focus,
 .select:focus {
   outline: none;
-  border-color: var(--color-primary);
+  border-color: rgba(255, 255, 255, 0.6);
 }
 
 .prixRow {
@@ -60,7 +62,7 @@
 
 .sep {
   font-size: 0.8rem;
-  color: var(--color-text-muted);
+  color: rgba(255, 255, 255, 0.5);
   white-space: nowrap;
   padding-top: 1.4rem;
 }
@@ -76,9 +78,9 @@
   height: 40px;
   padding: 0 1rem;
   border-radius: var(--border-radius);
-  border: 1.5px solid var(--color-border);
+  border: 1.5px solid rgba(255, 255, 255, 0.35);
   background: transparent;
-  color: var(--color-text-muted);
+  color: rgba(255, 255, 255, 0.8);
   font-size: 0.875rem;
   font-family: inherit;
   cursor: pointer;
@@ -87,8 +89,8 @@
 }
 
 .btnReset:hover {
-  border-color: var(--color-primary);
-  color: var(--color-primary);
+  border-color: #D8C3AE;
+  color: #D8C3AE;
 }
 
 @media (max-width: 640px) {

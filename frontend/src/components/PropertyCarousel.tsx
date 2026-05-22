@@ -53,23 +53,21 @@ export default function PropertyCarousel() {
 
       {/* Contenu au-dessus */}
       <div className={styles.inner}>
-        <div className="container">
-          <motion.div
-            className={styles.header}
-            initial={{ opacity: 0, y: 16 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.5 }}
-          >
-            <div>
-              <span className={styles.eyebrow}>Sélection</span>
-              <h2 className={styles.title}>Nos biens en vedette</h2>
-            </div>
-            <Link to="/biens" className={styles.seeAll}>
-              Voir tous les biens &rarr;
-            </Link>
-          </motion.div>
-        </div>
+        <motion.div
+          className={styles.header}
+          initial={{ opacity: 0, y: 16 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          transition={{ duration: 0.5 }}
+        >
+          <div>
+            <span className={styles.eyebrow}>Sélection</span>
+            <h2 className={styles.title}>Nos biens en vedette</h2>
+          </div>
+          <Link to="/biens" className={styles.seeAll}>
+            Voir tous les biens &rarr;
+          </Link>
+        </motion.div>
 
         <motion.div
           className={styles.swiperWrap}

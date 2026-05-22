@@ -4,11 +4,10 @@
   min-height: 100vh;
 }
 
-/* ── Header + filtres (fond beige conservé) ─────────────── */
+/* ── Header + filtres ───────────────────────────────────── */
 .topBar {
-  background: var(--c-bg);
+  background: #38573F;
   padding: 2.5rem 0 2rem;
-  border-bottom: 1px solid rgba(56, 87, 63, 0.12);
 }
 
 .header {
@@ -19,44 +18,36 @@
   font-family: 'Playfair Display', serif;
   font-size: clamp(1.6rem, 3vw, 2.2rem);
   font-weight: 700;
-  color: var(--c-text);
+  color: #fff;
   letter-spacing: -0.02em;
   margin-bottom: 0.3rem;
 }
 
 .count {
   font-size: 0.88rem;
-  color: var(--c-text-sec);
+  color: rgba(255, 255, 255, 0.7);
 }
 
-/* ── Liste en quinconce (fond blanc pur) ─────────────────── */
+/* ── Liste en quinconce ─────────────────────────────────── */
 .list {
   display: flex;
   flex-direction: column;
-  background: #fff;
-  padding: 5rem 2rem 6rem;
+  background: var(--c-bg);
+  padding: 5rem 3rem 6rem;
+  gap: 4rem;
 }
 
-/*
-  Chaque rangée : photo | gap | info
-  Le margin-top négatif crée le léger chevauchement entre rangées :
-  la rangée N+1 remonte légèrement sur la rangée N.
-  Les éléments DOM ultérieurs sont naturellement au-dessus en z-order.
-*/
+/* Chaque rangée alterne photo | info */
 .row {
   position: relative;
   display: grid;
   grid-template-columns: 56% 44%;
-  column-gap: 3.5rem;     /* espace aéré entre photo et description */
+  column-gap: 3.5rem;
   min-height: 56vh;
-  max-width: 1380px;
+  max-width: 1300px;
   width: 100%;
   margin: 0 auto;
-  background: #fff;
-}
-
-.row + .row {
-  margin-top: -3rem;      /* chevauchement léger */
+  background: transparent;
 }
 
 /* Rangée inversée : photo à droite */
@@ -67,6 +58,7 @@
 .photoWrap {
   position: relative;
   overflow: hidden;
+  box-shadow: 0 8px 40px rgba(26, 26, 26, 0.14);
 }
 
 .photo {
@@ -88,10 +80,10 @@
   position: absolute;
   top: 1.5rem;
   left: 1.5rem;
-  background: rgba(26, 26, 26, 0.82);
+  background: #38573F;
   color: #fff;
-  font-size: 0.72rem;
-  font-weight: 600;
+  font-size: 0.7rem;
+  font-weight: 700;
   text-transform: uppercase;
   letter-spacing: 0.1em;
   padding: 0.35rem 0.85rem;
@@ -102,27 +94,28 @@
   display: flex;
   flex-direction: column;
   justify-content: center;
-  padding: 4rem 2rem 4rem 0;
+  padding: 3.5rem;
   background: #fff;
+  box-shadow: 0 8px 40px rgba(26, 26, 26, 0.08);
+  border-top: 3px solid #38573F;
 }
 
-/* Pour les rangées inversées, le padding est symétrique */
 .rowReversed .info {
-  padding: 4rem 0 4rem 2rem;
+  border-top: 3px solid #38573F;
 }
 
 .location {
-  font-size: 0.8rem;
-  font-weight: 600;
-  color: var(--c-text-sec);
+  font-size: 0.78rem;
+  font-weight: 700;
+  color: #38573F;
   text-transform: uppercase;
-  letter-spacing: 0.12em;
+  letter-spacing: 0.14em;
   margin-bottom: 0.75rem;
 }
 
 .typeBadge {
-  color: #38573F;
-  font-weight: 600;
+  color: var(--c-text-sec);
+  font-weight: 500;
   text-transform: capitalize;
 }
 
@@ -140,6 +133,8 @@
   font-size: 1rem;
   color: var(--c-text-sec);
   margin-bottom: 2rem;
+  padding-bottom: 1.5rem;
+  border-bottom: 1px solid rgba(56, 87, 63, 0.12);
 }
 
 /* ── Stats ──────────────────────────────────────────────── */
@@ -167,7 +162,7 @@
 
 .statLabel {
   font-size: 0.7rem;
-  font-weight: 500;
+  font-weight: 600;
   text-transform: uppercase;
   letter-spacing: 0.08em;
   color: var(--c-text-sec);
@@ -185,7 +180,6 @@
   color: var(--c-text-sec);
   line-height: 1.8;
   margin-bottom: 2rem;
-  max-width: 460px;
 }
 
 /* ── CTA ────────────────────────────────────────────────── */
@@ -210,7 +204,7 @@
   text-align: center;
   padding: 6rem 1rem;
   color: var(--c-text-sec);
-  background: #fff;
+  background: var(--c-bg);
 }
 
 .emptyTitle {
@@ -222,21 +216,19 @@
 
 /* ── Responsive ─────────────────────────────────────────── */
 @media (max-width: 900px) {
-  .list { padding: 3rem 1rem 4rem; }
+  .list { padding: 3rem 1rem 4rem; gap: 2.5rem; }
 
   .row {
     grid-template-columns: 1fr;
     column-gap: 0;
     min-height: auto;
   }
-  .row + .row { margin-top: 2.5rem; }   /* pas de chevauchement sur mobile */
 
   .rowReversed .photoWrap,
   .rowReversed .info { order: unset; }
 
   .photoWrap { height: 58vw; max-height: 400px; }
-  .info { padding: 2rem 1rem; }
-  .rowReversed .info { padding: 2rem 1rem; }
+  .info { padding: 2rem 1.5rem; }
   .stats { gap: 1rem; }
 }
 
