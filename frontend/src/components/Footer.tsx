@@ -48,11 +48,11 @@ export default function Footer() {
         <hr className={styles.divider} />
 
         <div className={styles.bottom}>
-          <span>© {annee} KreAgency — Tous droits réservés</span>
-          <div className={styles.bottomLinks}>
-            <span className={styles.badge}>Données fictives — Usage démo</span>
+          <div className={styles.bottomLeft}>
+            <span>© {annee} KreAgency — Tous droits réservés</span>
             <Link to="/mentions-legales" className={styles.bottomLink}>Mentions légales</Link>
           </div>
+          <span className={styles.badge}>Données fictives — Usage démo</span>
         </div>
       </div>
     </footer>

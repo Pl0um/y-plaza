@@ -69,6 +69,45 @@
   margin-bottom: 1.25rem;
 }
 
+.prixRow {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  gap: 0.6rem;
+}
+
+.favBtn {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  padding: 0.45rem 0.875rem;
+  border: 1.5px solid var(--color-border);
+  border-radius: var(--border-radius);
+  background: transparent;
+  color: var(--color-text-muted);
+  font-size: 0.82rem;
+  font-family: inherit;
+  font-weight: 500;
+  cursor: pointer;
+  transition: border-color var(--transition), color var(--transition), background var(--transition);
+  white-space: nowrap;
+}
+
+.favBtn:hover:not(:disabled) {
+  border-color: #e11d48;
+  color: #e11d48;
+}
+
+.favBtnActive {
+  border-color: #e11d48;
+  color: #e11d48;
+  background: #fff1f2;
+}
+
+:global(html.dark) .favBtnActive {
+  background: rgba(225, 29, 72, 0.1);
+}
+
 .titre {
   font-size: 1.5rem;
   font-weight: 700;

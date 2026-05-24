@@ -127,10 +127,13 @@ export default function ProfilPage() {
                       <button
                         onClick={() => handleRetireFavori(f.bien_id)}
                         style={{
-                          position: 'absolute', top: '0.5rem', right: '0.5rem',
-                          background: 'rgba(0,0,0,0.55)', color: '#fff',
-                          border: 'none', borderRadius: '50%',
-                          width: 28, height: 28, cursor: 'pointer', fontSize: '1rem',
+                          position: 'absolute', top: 0, right: 0,
+                          background: 'rgba(0,0,0,0.6)', color: '#fff',
+                          border: 'none',
+                          borderRadius: '0 var(--border-radius) 0 6px',
+                          width: 30, height: 30, cursor: 'pointer', fontSize: '1.1rem',
+                          display: 'flex', alignItems: 'center', justifyContent: 'center',
+                          lineHeight: 1,
                         }}
                         title="Retirer des favoris"
                       >

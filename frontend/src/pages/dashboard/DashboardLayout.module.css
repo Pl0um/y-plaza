@@ -1,4 +1,4 @@
-.page { padding: calc(72px + 2rem) 0 4rem; }
+.page { padding: calc(72px + 2rem) 0 4rem; min-height: 100vh; }
 
 .header {
   display: flex;

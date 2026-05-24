@@ -75,6 +75,12 @@
   font-size: 0.78rem;
 }
 
+.bottomLeft {
+  display: flex;
+  gap: 1.5rem;
+  align-items: center;
+}
+
 .bottomLinks {
   display: flex;
   gap: 1.5rem;
