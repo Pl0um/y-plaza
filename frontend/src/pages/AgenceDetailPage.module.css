@@ -57,29 +57,33 @@
 }
 
 .infoItem {
-  background: var(--color-bg-light);
-  border-radius: var(--border-radius);
+  background: #38573F;
+  border-top: 3px solid #D8C3AE;
   padding: 0.875rem 1rem;
+  transition: opacity 0.2s ease;
 }
+.infoItem:hover { opacity: 0.92; }
 
 .infoLabel {
   font-size: 0.72rem;
   font-weight: 600;
   text-transform: uppercase;
   letter-spacing: 0.05em;
-  color: var(--color-text-muted);
+  color: rgba(255, 255, 255, 0.6);
   margin-bottom: 0.3rem;
 }
 
 .infoValue {
   font-size: 0.9rem;
   font-weight: 500;
-  color: var(--color-text);
+  color: #fff;
 }
 
 .infoValue a {
-  color: var(--color-primary);
+  color: #D8C3AE;
+  transition: opacity 0.2s ease;
 }
+.infoValue a:hover { opacity: 0.8; }
 
 /* ─── Carte ─────────────────────────────────────────────────────── */
 .mapTitle {
