@@ -45,7 +45,7 @@ export default function Navbar() {
       <div className={`container ${styles.inner}`}>
         <NavLink to="/" className={styles.logoLink}>
           <img
-            src="/images/logo_KRE-removebg-preview.png"
+            src="/images/logoKRE2.png"
             alt="KRE"
             className={styles.logo}
           />
@@ -54,18 +54,26 @@ export default function Navbar() {
         <ul className={styles.links}>
           <li>
             <NavLink
-              to="/" end
+              to="/louer"
               className={({ isActive }) => `${styles.link} ${isActive ? styles.linkActive : ''}`}
             >
-              Accueil
+              Louer
             </NavLink>
           </li>
           <li>
             <NavLink
-              to="/biens"
+              to="/acheter"
               className={({ isActive }) => `${styles.link} ${isActive ? styles.linkActive : ''}`}
             >
-              Biens
+              Acheter
+            </NavLink>
+          </li>
+          <li>
+            <NavLink
+              to="/vendre"
+              className={({ isActive }) => `${styles.link} ${isActive ? styles.linkActive : ''}`}
+            >
+              Vendre
             </NavLink>
           </li>
           <li>

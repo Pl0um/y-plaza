@@ -6,6 +6,9 @@ import Navbar              from './components/Navbar';
 import Footer              from './components/Footer';
 
 import HomePage            from './pages/HomePage';
+import LocationPage        from './pages/LocationPage';
+import AcheterPage         from './pages/AcheterPage';
+import VendrePage          from './pages/VendrePage';
 import BiensPage           from './pages/BiensPage';
 import BienDetailPage      from './pages/BienDetailPage';
 import AgencesPage         from './pages/AgencesPage';
@@ -29,6 +32,9 @@ export default function App() {
           <Routes>
             {/* ── Routes publiques ── */}
             <Route path="/"            element={<HomePage />} />
+            <Route path="/louer"       element={<LocationPage />} />
+            <Route path="/acheter"     element={<AcheterPage />} />
+            <Route path="/vendre"      element={<VendrePage />} />
             <Route path="/biens"       element={<BiensPage />} />
             <Route path="/biens/:id"   element={<BienDetailPage />} />
             <Route path="/agences"     element={<AgencesPage />} />

@@ -95,8 +95,8 @@ button { cursor: pointer; font-family: inherit; }
 .swiper-button-next::after,
 .swiper-button-prev::after { font-size: 13px !important; font-weight: 700 !important; }
 
-.swiper-pagination-bullet { background: var(--c-accent) !important; }
-.swiper-pagination-bullet-active { opacity: 1 !important; }
+.swiper-pagination-bullet { background: #D8C3AE !important; opacity: 0.6 !important; }
+.swiper-pagination-bullet-active { background: #D8C3AE !important; opacity: 1 !important; }
 
 /* ─── Badges ─────────────────────────────────────────────────────── */
 .badge {

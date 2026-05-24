@@ -11,7 +11,7 @@ export default function Footer() {
           <div>
             <Link to="/" className={styles.logoLink}>
               <img
-                src="/images/logo_KRE-removebg-preview.png"
+                src="/images/logoKRE2.png"
                 alt="KRE"
                 className={styles.logo}
               />

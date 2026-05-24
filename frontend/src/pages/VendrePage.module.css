@@ -1,0 +1,342 @@
+.page {
+  padding-top: 72px;
+  background: var(--c-bg);
+  min-height: 100vh;
+}
+
+/* ── Hero ──────────────────────────────────────────────── */
+.hero {
+  position: relative;
+  background: #38573F;
+  padding: 5rem 0 4rem;
+  overflow: hidden;
+}
+
+.hero::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background-image: url('/images/pexels-realtor-turkiye-575431660-16959786.jpg');
+  background-size: cover;
+  background-position: center;
+  opacity: 0.15;
+}
+
+.heroOverlay {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(135deg, rgba(56, 87, 63, 0.9) 0%, rgba(30, 55, 35, 0.95) 100%);
+}
+
+.heroContent {
+  position: relative;
+  z-index: 1;
+  max-width: 700px;
+}
+
+.eyebrow {
+  display: inline-block;
+  font-size: 0.7rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.14em;
+  color: rgba(216, 195, 174, 0.9);
+  border-left: 3px solid #D8C3AE;
+  padding-left: 0.75rem;
+  margin-bottom: 1.5rem;
+}
+
+.heroTitle {
+  font-family: 'Playfair Display', serif;
+  font-size: clamp(2.2rem, 5vw, 3.5rem);
+  font-weight: 700;
+  line-height: 1.12;
+  color: #fff;
+  letter-spacing: -0.02em;
+  margin-bottom: 1.25rem;
+}
+
+.heroTitle em {
+  font-style: italic;
+  color: #D8C3AE;
+}
+
+.heroSubtitle {
+  font-size: 1rem;
+  color: rgba(255, 255, 255, 0.75);
+  line-height: 1.75;
+  max-width: 500px;
+}
+
+/* ── Simulateur ────────────────────────────────────────── */
+.simSection {
+  padding: 5rem 0;
+}
+
+.simGrid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 3rem;
+  align-items: start;
+}
+
+/* Formulaire */
+.formBox {
+  background: #fff;
+  padding: 2.5rem;
+  box-shadow: 0 8px 40px rgba(26, 26, 26, 0.08);
+  border-top: 3px solid #38573F;
+}
+
+.formTitle {
+  font-family: 'Playfair Display', serif;
+  font-size: 1.5rem;
+  font-weight: 700;
+  color: #1a1a1a;
+  margin-bottom: 2rem;
+}
+
+.form {
+  display: flex;
+  flex-direction: column;
+  gap: 1.25rem;
+}
+
+.field {
+  display: flex;
+  flex-direction: column;
+  gap: 0.35rem;
+  flex: 1;
+}
+
+.fieldRow {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1rem;
+}
+
+.label {
+  font-size: 0.75rem;
+  font-weight: 700;
+  color: #5a4a3a;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+}
+
+.input,
+.select {
+  height: 42px;
+  padding: 0 0.875rem;
+  border: 1.5px solid rgba(56, 87, 63, 0.2);
+  background: #faf8f4;
+  font-size: 0.9rem;
+  font-family: inherit;
+  color: #1a1a1a;
+  width: 100%;
+  transition: border-color 0.2s ease;
+}
+.input:focus,
+.select:focus {
+  outline: none;
+  border-color: #38573F;
+}
+.input::placeholder { color: #a09080; }
+
+.submitBtn {
+  height: 48px;
+  background: #38573F;
+  color: #fff;
+  border: none;
+  font-size: 0.9rem;
+  font-weight: 600;
+  font-family: inherit;
+  letter-spacing: 0.04em;
+  cursor: pointer;
+  transition: opacity 0.25s ease;
+  margin-top: 0.5rem;
+}
+.submitBtn:hover { opacity: 0.85; }
+
+/* Résultat */
+.resultBox {
+  background: #fff;
+  padding: 2.5rem;
+  box-shadow: 0 8px 40px rgba(26, 26, 26, 0.08);
+  border-top: 3px solid #D8C3AE;
+  min-height: 360px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.resultPlaceholder {
+  text-align: center;
+  padding: 2rem;
+}
+.placeholderIcon {
+  font-family: 'Playfair Display', serif;
+  font-size: 3.5rem;
+  font-weight: 700;
+  color: rgba(56, 87, 63, 0.15);
+  line-height: 1;
+  margin-bottom: 1.5rem;
+}
+.placeholderText {
+  font-size: 0.9rem;
+  color: #7a6a5a;
+  line-height: 1.75;
+  max-width: 280px;
+  margin: 0 auto;
+}
+
+.result {
+  display: flex;
+  flex-direction: column;
+  gap: 0;
+}
+.resultEyebrow {
+  font-size: 0.72rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.12em;
+  color: #38573F;
+  margin-bottom: 1.25rem;
+}
+.resultRange {
+  display: flex;
+  align-items: baseline;
+  gap: 0.75rem;
+  flex-wrap: wrap;
+  margin-bottom: 0.75rem;
+}
+.resultMin,
+.resultMax {
+  font-family: 'Playfair Display', serif;
+  font-size: clamp(1.5rem, 3vw, 2rem);
+  font-weight: 700;
+  color: #38573F;
+}
+.resultSep {
+  font-size: 1.2rem;
+  color: #a09080;
+}
+.resultPerM2 {
+  font-size: 0.88rem;
+  color: #5a4a3a;
+  margin-bottom: 1.5rem;
+  padding-bottom: 1.5rem;
+  border-bottom: 1px solid rgba(56, 87, 63, 0.12);
+}
+.resultDisclaimer {
+  font-size: 0.78rem;
+  color: #9a8a7a;
+  line-height: 1.65;
+  margin-bottom: 1.75rem;
+}
+.resultCta {
+  display: inline-flex;
+  align-items: center;
+  height: 46px;
+  padding: 0 1.75rem;
+  background: #38573F;
+  color: #fff;
+  font-size: 0.85rem;
+  font-weight: 600;
+  letter-spacing: 0.04em;
+  align-self: flex-start;
+  transition: opacity 0.25s ease;
+}
+.resultCta:hover { opacity: 0.85; }
+
+.resultError {
+  text-align: center;
+  padding: 2rem;
+  font-size: 0.9rem;
+  color: #7a6a5a;
+}
+
+/* ── Pourquoi nous ─────────────────────────────────────── */
+.whySection {
+  background: #38573F;
+  padding: 5rem 0 4.5rem;
+}
+
+.whyHeader {
+  margin-bottom: 3rem;
+}
+
+.whyEyebrow {
+  display: block;
+  font-size: 0.7rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.14em;
+  color: rgba(216, 195, 174, 0.85);
+  margin-bottom: 0.75rem;
+}
+
+.whyTitle {
+  font-family: 'Playfair Display', serif;
+  font-size: clamp(1.6rem, 3vw, 2.2rem);
+  font-weight: 700;
+  color: #fff;
+  letter-spacing: -0.02em;
+}
+
+.whyGrid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 1.5rem;
+}
+
+.whyCard {
+  background: #f5efe6;
+  padding: 1.75rem;
+  border-top: 3px solid #38573F;
+  transition: background 0.25s ease, box-shadow 0.25s ease;
+}
+.whyCard:hover {
+  background: #ede5d8;
+  box-shadow: 0 6px 24px rgba(0, 0, 0, 0.12);
+}
+
+.whyNum {
+  display: block;
+  font-family: 'Playfair Display', serif;
+  font-size: 2rem;
+  font-weight: 700;
+  color: rgba(56, 87, 63, 0.2);
+  line-height: 1;
+  margin-bottom: 1rem;
+}
+
+.whyCardTitle {
+  font-size: 0.95rem;
+  font-weight: 600;
+  color: #1a1a1a;
+  line-height: 1.35;
+  margin-bottom: 0.75rem;
+}
+
+.whyCardText {
+  font-size: 0.82rem;
+  color: #5a4a3a;
+  line-height: 1.7;
+}
+
+/* ── Responsive ────────────────────────────────────────── */
+@media (max-width: 900px) {
+  .simGrid {
+    grid-template-columns: 1fr;
+    gap: 2rem;
+  }
+  .whyGrid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (max-width: 640px) {
+  .fieldRow { grid-template-columns: 1fr; }
+  .whyGrid { grid-template-columns: 1fr; }
+  .formBox, .resultBox { padding: 1.75rem 1.25rem; }
+}
