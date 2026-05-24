@@ -75,14 +75,26 @@
   font-size: 0.78rem;
 }
 
+.bottomLinks {
+  display: flex;
+  gap: 1.5rem;
+  align-items: center;
+}
+
 .badge {
-  background-color: rgba(56, 87, 63, 0.6);
+  background: rgba(56, 87, 63, 0.6);
   color: rgba(216, 195, 174, 0.85);
   padding: 0.2rem 0.65rem;
-  border-radius: 0;
   font-size: 0.72rem;
   font-weight: 600;
 }
+
+.bottomLink {
+  font-size: 0.78rem;
+  color: rgba(216, 195, 174, 0.55);
+  transition: color 0.2s ease;
+}
+.bottomLink:hover { color: #D8C3AE; }
 
 @media (max-width: 768px) {
   .grid { grid-template-columns: 1fr; gap: 2rem; }

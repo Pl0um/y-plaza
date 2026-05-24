@@ -1,0 +1,72 @@
+.page {
+  padding-top: calc(72px + 3rem);
+  padding-bottom: 5rem;
+  background: var(--c-bg);
+  min-height: 100vh;
+}
+
+.inner {
+  max-width: 800px;
+}
+
+.title {
+  font-family: 'Playfair Display', serif;
+  font-size: clamp(1.8rem, 4vw, 2.6rem);
+  font-weight: 700;
+  color: #1a1a1a;
+  letter-spacing: -0.02em;
+  margin-bottom: 0.5rem;
+}
+
+.updated {
+  font-size: 0.82rem;
+  color: #7a6a5a;
+  margin-bottom: 3rem;
+  padding-bottom: 2rem;
+  border-bottom: 1px solid rgba(56, 87, 63, 0.15);
+}
+
+.section {
+  margin-bottom: 2.5rem;
+}
+
+.sectionTitle {
+  font-family: 'Playfair Display', serif;
+  font-size: 1.1rem;
+  font-weight: 700;
+  color: #38573F;
+  margin-bottom: 1rem;
+  padding-left: 0.875rem;
+  border-left: 3px solid #38573F;
+}
+
+.sectionBody {
+  font-size: 0.9rem;
+  color: #3a2e26;
+  line-height: 1.85;
+}
+
+.sectionBody p {
+  margin-bottom: 0.75rem;
+}
+
+.sectionBody ul {
+  list-style: none;
+  margin: 0.5rem 0 0.75rem 0;
+  display: flex;
+  flex-direction: column;
+  gap: 0.35rem;
+}
+
+.sectionBody ul li {
+  padding-left: 1rem;
+  position: relative;
+}
+
+.sectionBody ul li::before {
+  content: '—';
+  position: absolute;
+  left: 0;
+  color: #38573F;
+  font-weight: 700;
+}

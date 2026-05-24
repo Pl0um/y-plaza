@@ -87,11 +87,14 @@ button { cursor: pointer; font-family: inherit; }
 /* ─── Swiper overrides ───────────────────────────────────────────── */
 .swiper-button-next,
 .swiper-button-prev {
-  background: var(--c-accent) !important;
-  color: #fff !important;
+  background: #D8C3AE !important;
+  color: #1a1a1a !important;
   width: 44px !important; height: 44px !important;
   border-radius: 0 !important;
+  transition: opacity 0.2s ease !important;
 }
+.swiper-button-next:hover,
+.swiper-button-prev:hover { opacity: 0.85 !important; }
 .swiper-button-next::after,
 .swiper-button-prev::after { font-size: 13px !important; font-weight: 700 !important; }
 

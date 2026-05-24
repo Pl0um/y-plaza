@@ -1,4 +1,4 @@
-.page { padding: 2.5rem 0 4rem; }
+.page { padding: calc(72px + 2.5rem) 0 4rem; }
 
 .header {
   margin-bottom: 2rem;

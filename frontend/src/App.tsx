@@ -21,6 +21,7 @@ import AnnoncesPage        from './pages/dashboard/AnnoncesPage';
 import TransactionsPage    from './pages/dashboard/TransactionsPage';
 import StatsPage           from './pages/dashboard/StatsPage';
 import AdminPage           from './pages/AdminPage';
+import MentionsLegalesPage from './pages/MentionsLegalesPage';
 
 export default function App() {
   return (
@@ -42,6 +43,7 @@ export default function App() {
             <Route path="/login"           element={<LoginPage />} />
             <Route path="/register"        element={<RegisterPage />} />
             <Route path="/reset-password"  element={<ResetPasswordPage />} />
+            <Route path="/mentions-legales" element={<MentionsLegalesPage />} />
 
             {/* ── Profil client ── */}
             <Route path="/profil" element={

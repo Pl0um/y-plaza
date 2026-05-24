@@ -104,28 +104,28 @@ export default function StatsPage() {
 
         {/* ── Graphique CA par mois (barres CSS) ── */}
         <div style={{
-          background: 'var(--color-bg)', border: '1px solid var(--color-border)',
+          background: '#38573F', border: 'none',
+          borderTop: '3px solid #D8C3AE',
           borderRadius: 'var(--border-radius)', padding: '1.5rem',
-          boxShadow: 'var(--shadow-sm)', marginBottom: '2rem',
+          boxShadow: '0 4px 20px rgba(56,87,63,0.2)', marginBottom: '2rem',
         }}>
-          <h2 style={{ fontSize: '1rem', fontWeight: 600, color: 'var(--color-text)', marginBottom: '1.5rem' }}>
+          <h2 style={{ fontSize: '1rem', fontWeight: 600, color: '#fff', marginBottom: '1.5rem' }}>
             CA finalisé par mois (12 derniers mois)
           </h2>
           <div style={{ display: 'flex', alignItems: 'flex-end', gap: '0.5rem', height: 160 }}>
             {parMois.map(m => (
               <div key={m.label} style={{ flex: 1, display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '0.4rem', height: '100%', justifyContent: 'flex-end' }}>
-                <span style={{ fontSize: '0.65rem', color: 'var(--color-text-muted)' }}>
+                <span style={{ fontSize: '0.65rem', color: 'rgba(255,255,255,0.7)' }}>
                   {m.ca > 0 ? `${Math.round(m.ca / 1000)}k` : ''}
                 </span>
                 <div style={{
                   width: '100%',
                   height: `${(m.ca / maxCa) * 120}px`,
                   minHeight: m.ca > 0 ? 4 : 0,
-                  background: 'var(--color-primary)',
+                  background: '#D8C3AE',
                   borderRadius: '4px 4px 0 0',
-                  opacity: 0.85,
                 }} />
-                <span style={{ fontSize: '0.65rem', color: 'var(--color-text-muted)', whiteSpace: 'nowrap' }}>
+                <span style={{ fontSize: '0.65rem', color: 'rgba(255,255,255,0.6)', whiteSpace: 'nowrap' }}>
                   {m.label}
                 </span>
               </div>
@@ -135,26 +135,27 @@ export default function StatsPage() {
 
         {/* ── Biens par ville ── */}
         <div style={{
-          background: 'var(--color-bg)', border: '1px solid var(--color-border)',
+          background: '#38573F', border: 'none',
+          borderTop: '3px solid #D8C3AE',
           borderRadius: 'var(--border-radius)', padding: '1.5rem',
-          boxShadow: 'var(--shadow-sm)',
+          boxShadow: '0 4px 20px rgba(56,87,63,0.2)',
         }}>
-          <h2 style={{ fontSize: '1rem', fontWeight: 600, color: 'var(--color-text)', marginBottom: '1.25rem' }}>
+          <h2 style={{ fontSize: '1rem', fontWeight: 600, color: '#fff', marginBottom: '1.25rem' }}>
             Biens par ville
           </h2>
           <div style={{ display: 'flex', flexDirection: 'column', gap: '0.625rem' }}>
             {villesTriees.map(([ville, count]) => (
               <div key={ville} style={{ display: 'flex', alignItems: 'center', gap: '1rem' }}>
-                <span style={{ minWidth: 130, fontSize: '0.875rem', color: 'var(--color-text)' }}>
+                <span style={{ minWidth: 130, fontSize: '0.875rem', color: '#fff' }}>
                   {ville}
                 </span>
-                <div style={{ flex: 1, background: 'var(--color-bg-light)', borderRadius: 4, height: 10 }}>
+                <div style={{ flex: 1, background: 'rgba(255,255,255,0.15)', borderRadius: 4, height: 10 }}>
                   <div style={{
                     width: `${(count / biens.length) * 100}%`,
-                    background: 'var(--color-primary)', borderRadius: 4, height: '100%',
+                    background: '#D8C3AE', borderRadius: 4, height: '100%',
                   }} />
                 </div>
-                <span style={{ fontSize: '0.82rem', color: 'var(--color-text-muted)', minWidth: 24, textAlign: 'right' }}>
+                <span style={{ fontSize: '0.82rem', color: 'rgba(255,255,255,0.65)', minWidth: 24, textAlign: 'right' }}>
                   {count}
                 </span>
               </div>

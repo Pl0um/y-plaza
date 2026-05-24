@@ -1,10 +1,11 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useRef } from 'react';
 import { motion } from 'framer-motion';
 import { Link } from 'react-router-dom';
 import { Swiper, SwiperSlide } from 'swiper/react';
-import { Autoplay, Pagination } from 'swiper/modules';
+import { Autoplay, Pagination, Navigation } from 'swiper/modules';
 import 'swiper/css';
 import 'swiper/css/pagination';
+import 'swiper/css/navigation';
 import { fetchBiens } from '../services/api';
 import type { Bien } from '../types';
 import styles from './PropertyCarousel.module.css';
@@ -30,6 +31,8 @@ function typeFr(type: Bien['type_bien']) {
 
 export default function PropertyCarousel() {
   const [biens, setBiens] = useState<Bien[]>([]);
+  const prevRef = useRef<HTMLButtonElement>(null);
+  const nextRef = useRef<HTMLButtonElement>(null);
 
   useEffect(() => {
     fetchBiens({ statut: 'disponible' }).then(all => {
@@ -70,14 +73,23 @@ export default function PropertyCarousel() {
         </motion.div>
 
         <motion.div
-          className={styles.swiperWrap}
+          className={styles.carouselOuter}
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
           transition={{ duration: 0.6, delay: 0.1 }}
         >
+          <button ref={prevRef} className={styles.navBtn} aria-label="Précédent">‹</button>
+
+          <div className={styles.swiperWrap}>
           <Swiper
-            modules={[Autoplay, Pagination]}
+            modules={[Autoplay, Pagination, Navigation]}
+            onBeforeInit={swiper => {
+              if (swiper.params.navigation && typeof swiper.params.navigation !== 'boolean') {
+                swiper.params.navigation.prevEl = prevRef.current;
+                swiper.params.navigation.nextEl = nextRef.current;
+              }
+            }}
             autoplay={{ delay: 2000, disableOnInteraction: false, pauseOnMouseEnter: true }}
             loop
             pagination={{ clickable: true }}
@@ -113,6 +125,9 @@ export default function PropertyCarousel() {
               );
             })}
           </Swiper>
+          </div>
+
+          <button ref={nextRef} className={styles.navBtn} aria-label="Suivant">›</button>
         </motion.div>
       </div>
     </section>

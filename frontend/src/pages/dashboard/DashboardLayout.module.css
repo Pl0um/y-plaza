@@ -1,4 +1,4 @@
-.page { padding: 2rem 0 4rem; }
+.page { padding: calc(72px + 2rem) 0 4rem; }
 
 .header {
   display: flex;
@@ -225,22 +225,28 @@
 }
 
 .statCard {
-  background: var(--color-bg);
-  border: 1px solid var(--color-border);
+  background: #38573F;
+  border: none;
+  border-top: 3px solid #D8C3AE;
   border-radius: var(--border-radius);
   padding: 1.25rem 1.5rem;
-  box-shadow: var(--shadow-sm);
+  box-shadow: 0 4px 20px rgba(56, 87, 63, 0.2);
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+.statCard:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 28px rgba(56, 87, 63, 0.28);
 }
 
 .statCardValue {
   font-size: 1.75rem;
   font-weight: 700;
-  color: var(--color-primary);
+  color: #fff;
 }
 
 .statCardLabel {
   font-size: 0.78rem;
-  color: var(--color-text-muted);
+  color: rgba(255, 255, 255, 0.65);
   margin-top: 0.2rem;
   text-transform: uppercase;
   letter-spacing: 0.04em;
