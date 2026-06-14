@@ -76,13 +76,12 @@ export const bienUpdateSchema = bienSchema.partial();
 // ─── Transactions ─────────────────────────────────────────────────────────────
 
 export const transactionSchema = z.object({
-  bien_id:          z.string().uuid('ID bien invalide'),
-  acheteur_id:      z.string().uuid('ID acheteur invalide'),
-  type_transaction: z.enum(['vente', 'location']),
-  prix_final:       z.number().positive('Prix final invalide').max(100_000_000),
-  date_transaction: z.string().regex(/^\d{4}-\d{2}-\d{2}$/, 'Date invalide (YYYY-MM-DD)'),
-  statut:           z.enum(['en_cours', 'finalisee', 'annulee']).optional(),
-  notes:            z.string().max(1000).optional(),
+  bien_id:     z.string().uuid('ID bien invalide'),
+  acheteur_id: z.string().uuid('ID acheteur invalide'),
+  type:        z.enum(['vente', 'location']),
+  prix_final:  z.number().positive('Prix final invalide').max(100_000_000),
+  statut:      z.enum(['en_cours', 'finalisee', 'annulee']).optional(),
+  notes:       z.string().max(1000).optional(),
 });
 
 export const transactionUpdateSchema = transactionSchema.partial();

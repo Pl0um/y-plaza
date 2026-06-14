@@ -50,7 +50,7 @@ export async function register(req: Request, res: Response): Promise<void> {
 
 // ─── login ────────────────────────────────────────────────────────────────────
 // POST /api/auth/login
-// Retourne le JWT + le profil complet avec le rôle.
+// Pose le JWT dans un cookie httpOnly (sb-token) et retourne le profil complet avec le rôle.
 export async function login(req: Request, res: Response): Promise<void> {
   const { email, password } = req.body as { email: string; password: string };
 

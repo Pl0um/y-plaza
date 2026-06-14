@@ -80,12 +80,6 @@ export interface RegisterPayload {
   prenom: string;
 }
 
-export interface AuthResponse {
-  token: string;
-  refresh_token: string;
-  user: Utilisateur;
-}
-
 export interface InvitePayload {
   email: string;
   role: RoleUtilisateur;
