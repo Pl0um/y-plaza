@@ -171,6 +171,6 @@ La documentation **fonctionnelle et technique complète** (architecture, modèle
 
 ---
 
-## 📄 Licence
-
-ISC — © KreAgency
+VICENTE ROMAIN 
+PLOYER KEO 
+GRANANA ENZO 
