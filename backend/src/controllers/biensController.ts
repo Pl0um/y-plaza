@@ -179,12 +179,32 @@ export async function updateBien(req: Request, res: Response, next: NextFunction
       if (req.body[champ] !== undefined) bienData[champ] = req.body[champ];
     }
 
-    const { error } = await supabase
-      .from('biens')
-      .update(bienData)
-      .eq('id', req.params.id);
+    // Met à jour les colonnes du bien uniquement s'il y en a (les photos sont gérées à part)
+    if (Object.keys(bienData).length > 0) {
+      const { error } = await supabase
+        .from('biens')
+        .update(bienData)
+        .eq('id', req.params.id);
 
-    if (error) throw error;
+      if (error) throw error;
+    }
+
+    // Photos fournies → on remplace l'ensemble (suppression puis réinsertion ordonnée)
+    if (Array.isArray(req.body.photos)) {
+      const { error: delError } = await supabase
+        .from('photos_biens')
+        .delete()
+        .eq('bien_id', req.params.id);
+      if (delError) throw delError;
+
+      if (req.body.photos.length > 0) {
+        const photosRows = (req.body.photos as string[]).map((url, ordre) => ({
+          bien_id: req.params.id, url, ordre,
+        }));
+        const { error: insError } = await supabase.from('photos_biens').insert(photosRows);
+        if (insError) throw insError;
+      }
+    }
 
     const { data, error: fetchError } = await supabase
       .from('biens')

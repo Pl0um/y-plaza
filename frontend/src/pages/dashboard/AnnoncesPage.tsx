@@ -23,6 +23,8 @@ const FORM_VIDE = {
   type_transaction: 'vente' as TypeTransaction, prix: '', surface: '',
   nb_pieces: '', nb_chambres: '', adresse: '', ville: '', code_postal: '',
   statut: 'disponible' as StatutBien, agence_id: '',
+  // Une URL HTTPS par ligne
+  photos: '',
 };
 
 export default function AnnoncesPage() {
@@ -66,6 +68,7 @@ export default function AnnoncesPage() {
       nb_pieces: String(bien.nb_pieces), nb_chambres: String(bien.nb_chambres),
       adresse: bien.adresse, ville: bien.ville, code_postal: bien.code_postal,
       statut: bien.statut, agence_id: bien.agence_id ?? '',
+      photos: (bien.photos ?? []).join('\n'),
     });
     setShowModal(true);
   }
@@ -87,6 +90,14 @@ export default function AnnoncesPage() {
     if (Number(form.prix) <= 0 || Number(form.surface) <= 0) {
       setErreur('Le prix et la surface doivent être supérieurs à 0.'); return;
     }
+    // Une URL par ligne — on filtre les lignes vides et on exige du HTTPS
+    const photos = form.photos.split('\n').map(u => u.trim()).filter(Boolean);
+    if (photos.some(u => !u.startsWith('https://'))) {
+      setErreur('Chaque photo doit être une URL commençant par https://'); return;
+    }
+    if (photos.length > 20) {
+      setErreur('Maximum 20 photos par annonce.'); return;
+    }
     setSaving(true); setErreur('');
     try {
       const payload = {
@@ -97,6 +108,7 @@ export default function AnnoncesPage() {
         nb_chambres: Number(form.nb_chambres) || 0,
         agence_id:   form.agence_id || null,
         latitude:    null, longitude: null,
+        photos,
       };
       if (editId) {
         await updateBien(editId, payload);
@@ -242,6 +254,16 @@ export default function AnnoncesPage() {
                   {champ('code_postal', 'Code postal')}
                 </div>
                 {champ('agence_id', 'ID Agence (optionnel)')}
+
+                <div className={styles.field}>
+                  <label className={styles.label}>Photos — une URL HTTPS par ligne (optionnel)</label>
+                  <textarea
+                    className={styles.textarea}
+                    value={form.photos}
+                    placeholder={'https://exemple.com/photo1.jpg\nhttps://exemple.com/photo2.jpg'}
+                    onChange={e => setForm(f => ({ ...f, photos: e.target.value }))}
+                  />
+                </div>
 
                 <div className={styles.modalActions}>
                   <button className={styles.btnOutline} onClick={() => setShowModal(false)}>
