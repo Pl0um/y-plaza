@@ -60,10 +60,11 @@ export const bienSchema = z.object({
   adresse:          z.string().trim().min(5).max(200),
   ville:            z.string().trim().min(2).max(100),
   code_postal:      z.string().regex(/^\d{5}$/, 'Code postal invalide (5 chiffres)'),
-  latitude:         z.number().min(-90).max(90).optional(),
-  longitude:        z.number().min(-180).max(180).optional(),
+  // .nullish() = accepte null ET undefined — le formulaire envoie null quand non renseigné
+  latitude:         z.number().min(-90).max(90).nullish(),
+  longitude:        z.number().min(-180).max(180).nullish(),
   statut:           z.enum(['disponible', 'sous_compromis', 'vendu', 'loue']).optional(),
-  agence_id:        z.string().uuid('ID agence invalide').optional(),
+  agence_id:        z.string().uuid('ID agence invalide').nullish(),
   // URLs photos : tableau optionnel, chaque URL doit commencer par https
   photos:           z.array(z.string().url().startsWith('https://', 'URL photo doit être HTTPS'))
                       .max(20, 'Maximum 20 photos')

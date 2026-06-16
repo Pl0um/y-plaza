@@ -71,8 +71,21 @@ export default function AnnoncesPage() {
   }
 
   async function handleSave() {
-    if (!form.titre || !form.prix || !form.surface || !form.ville) {
-      setErreur('Titre, prix, surface et ville sont obligatoires.'); return;
+    // Validation alignée sur bienSchema (backend) pour éviter un 400 à l'enregistrement
+    if (form.titre.trim().length < 5) {
+      setErreur('Le titre doit contenir au moins 5 caractères.'); return;
+    }
+    if (form.adresse.trim().length < 5) {
+      setErreur('L\'adresse doit contenir au moins 5 caractères.'); return;
+    }
+    if (!/^\d{5}$/.test(form.code_postal.trim())) {
+      setErreur('Le code postal doit comporter 5 chiffres.'); return;
+    }
+    if (form.ville.trim().length < 2) {
+      setErreur('La ville est obligatoire.'); return;
+    }
+    if (Number(form.prix) <= 0 || Number(form.surface) <= 0) {
+      setErreur('Le prix et la surface doivent être supérieurs à 0.'); return;
     }
     setSaving(true); setErreur('');
     try {
